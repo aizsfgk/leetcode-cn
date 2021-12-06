@@ -81,9 +81,10 @@ public:
         int right = oDfs(root->right);
 
 
+        // 结果
         ans += abs(left-right);
 
-
+        // 部分
         return left + right + root->val;
 
         // 后续遍历
