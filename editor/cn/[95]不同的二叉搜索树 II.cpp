@@ -44,9 +44,14 @@
  * };
  */
 class Solution {
+private:
+    vector<TreeNode*> ans;
+
 public:
     vector<TreeNode*> generateTrees(int n) {
+        for (int i=1; i<=n; i++) {
 
+        }
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
