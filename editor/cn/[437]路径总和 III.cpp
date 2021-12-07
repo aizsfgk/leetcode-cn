@@ -59,6 +59,7 @@ private:
 
         // 何时使用remainSum
         // 很重要啊; 不要使用else
+        // 找到了一条，之后可以继续找；不要断了
         if (targetSum == root->val) {
             ans++;
         }
@@ -74,6 +75,8 @@ public:
         }
 
         pSum(root, targetSum);
+
+        /// 对每个节点，都进行这样的查找
         pathSum(root->left, targetSum);
         pathSum(root->right, targetSum);
 
