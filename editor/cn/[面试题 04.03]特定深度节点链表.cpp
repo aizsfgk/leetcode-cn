@@ -39,11 +39,35 @@
  * };
  */
 class Solution {
-private:
-    vector
 public:
     vector<ListNode*> listOfDepth(TreeNode* tree) {
+        vector<ListNode*> ans;
+        if(tree == nullptr) {
+            return ans;
+        }
 
+        queue<TreeNode*> q;
+        q.push(tree);
+        while (!q.empty()) {
+            int sz = q.size();
+            ListNode *dummy = new ListNode(-1);
+            ListNode *cur = dummy;
+
+            for (int i=0; i<sz; i++) {
+                TreeNode* ele = q.front();q.pop();
+                cur->next = new ListNode(ele->val);
+                cur = cur->next;
+
+                if(ele->left) {
+                    q.push(ele->left);
+                }
+                if(ele->right) {
+                    q.push(ele->right);
+                }
+            }
+            ans.push_back(dummy->next);
+        }
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
