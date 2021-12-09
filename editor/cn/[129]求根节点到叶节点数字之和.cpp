@@ -66,26 +66,41 @@ class Solution {
 private:
     int ans;
 
+//    int sumNum(TreeNode* root, int preNum) {
+//        // 套路1，都是这样的
+//        // 1. 根节点为空， 直接返回0
+//        if (root == nullptr) {
+//            return 0;
+//        }
+//        // 套路1.的其他情况，计算该节点值，然后思考这个值何时返回???
+//        // 2. 节点不为空， 计算该节点值
+//        int val = preNum * 10 + root->val;
+//
+//        // 第二步的节点计算结果值后，何时返回???; 当为叶子节点的时候
+//        // 3. 如果是叶子节点，则返回该值
+//        if (root->left == nullptr && root->right == nullptr) {
+//            return val;
+//        } else {
+//            // 看根节点；需要做的逻辑处理，也就是其他节点的逻辑处理
+//            // 如果不是叶子节点；则将结果加起来
+//            return sumNum(root->left, val) + sumNum(root->right, val);
+//        }
+//
+//    }
     int sumNum(TreeNode* root, int preNum) {
-        // 套路1，都是这样的
-        // 1. 根节点为空， 直接返回0
         if (root == nullptr) {
             return 0;
         }
-        // 套路1.的其他情况，计算该节点值，然后思考这个值何时返回???
-        // 2. 节点不为空， 计算该节点值
+
         int val = preNum * 10 + root->val;
 
-        // 第二步的节点计算结果值后，何时返回???; 当为叶子节点的时候
-        // 3. 如果是叶子节点，则返回该值
         if (root->left == nullptr && root->right == nullptr) {
             return val;
         } else {
-            // 看根节点；需要做的逻辑处理，也就是其他节点的逻辑处理
-            // 如果不是叶子节点；则将结果加起来
-            return sumNum(root->left, val) + sumNum(root->right, val);
+            int left = sumNum(root->left, val);
+            int right = sumNum(root->right, val);
+            return left + right;
         }
-
     }
 
 public:
