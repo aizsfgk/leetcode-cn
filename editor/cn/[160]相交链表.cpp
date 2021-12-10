@@ -97,7 +97,21 @@
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        
+        ListNode *q = headA, *p = headB;
+
+        while ( q != p ) {
+            if (q == nullptr)
+                q = headB;
+            else
+                q = q->next;
+
+            if (p == nullptr)
+                p = headA;
+            else
+                p = p->next;
+        }
+
+        return q;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
