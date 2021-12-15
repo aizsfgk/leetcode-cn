@@ -77,6 +77,11 @@
  * };
  */
 class Solution {
+private:
+    vector<int> maxSBST(TreeNode* root) {
+
+    }
+
 public:
     int maxSumBST(TreeNode* root) {
         // 1. 任一节点的左子树和 与 右子树和 [后续遍历求的]
