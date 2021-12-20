@@ -45,11 +45,36 @@
 class Solution {
 public:
     int longestValidParentheses(string s) {
-        if (s.size() < 2) {
-            return 0;
+        if (s.size() < 1) {
+            return s.size();
         }
 
+        int ans = 0, start = 0;
+        stack<int> st;
 
+        for (int i=0; i<s.size(); i++) {
+
+            if (s[i] == '(') {
+                st.push(i);
+            } else {
+
+                if (!st.empty()) {
+                    st.pop();
+
+                    // 为空， 则表明是最长的合法串
+                    if (st.empty()) {
+                        ans = max(ans, i - start + 1);
+                    } else {
+                        // 最左边是栈顶元素的下一个元素
+                        ans = max(ans, i - st.top()); // i - st.top() -1+1 ==> i - stop();
+                    }
+
+                } else {
+                    start = i+1;
+                }
+            }
+        }
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
