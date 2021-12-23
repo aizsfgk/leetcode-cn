@@ -37,7 +37,26 @@
 class Solution {
 public:
     int minPathSum(vector<vector<int>>& grid) {
+        int in = grid.size();
+        int jn = grid[0].size();
 
+        vector<vector<int>> dp(in, vector<int>(jn, 0));
+
+        for (int i=0; i<in; i++) {
+            for (int j=0; j<jn; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = grid[i][j];
+                } else if (i == 0) {
+                    dp[i][j] = dp[i][j-1] + grid[i][j];
+                } else if (j == 0) {
+                    dp[i][j] = dp[i-1][j] + grid[i][j];
+                } else {
+                    dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j];
+                }
+            }
+        }
+
+        return dp[in - 1][jn - 1];
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
