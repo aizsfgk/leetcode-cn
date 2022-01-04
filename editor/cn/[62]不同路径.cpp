@@ -53,6 +53,8 @@
 class Solution {
 public:
     int uniquePaths(int m, int n) {
+        // dp[i][j] 标识以 i,j为重点的图，到达有几条路径?
+        //
         vector<vector<int>> dp(m, vector<int>(n, 0));
 
         for (int i=0; i<m; i++) {
