@@ -32,10 +32,30 @@ class Solution {
 public:
     string addBinary(string a, string b) {
         // 思路
-        //
-        //
+        // start
 
+        string ans = "";
+        int carry = 0;
 
+        int n = a.size() - 1;
+        int m = b.size() - 1;
+
+        int a1,b1,sum = 0;
+
+        while (n>=0 || m >=0 || carry) {
+            a1 = n>=0 ? a[n] - '0' : 0;
+            b1 = m>=0 ? b[m] - '0' : 0;
+
+            sum  = a1 + b1 + carry;
+            carry = sum/2;
+            string tmpStr = sum%2 == 0 ? "0" : "1";
+            ans.insert(0, tmpStr);
+
+            n--;
+            m--;
+        }
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

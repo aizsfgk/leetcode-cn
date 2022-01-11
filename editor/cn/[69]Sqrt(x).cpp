@@ -36,7 +36,9 @@
 class Solution {
 public:
     int mySqrt(int x) {
-
+        // 计算算数平方根
+        // 计算一个约数
+        //
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
