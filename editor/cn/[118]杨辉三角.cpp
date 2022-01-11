@@ -36,10 +36,21 @@ class Solution {
 public:
     vector<vector<int>> generate(int numRows) {
         // 思路
+        // 性质4： 第n行的第i个数为 第n-1行的第i-1 + 第i 的和
+        vector<vector<int>> ans(numRows);
 
 
+        for (int i=0; i<numRows; i++) {
+            // 重置大小
+            ans[i].resize(i+1);
 
-
+            // 首位都是1
+            ans[i][0] = ans[i][i] = 1;
+            for (int j=1; j<i; j++) {
+                ans[i][j] = ans[i-1][j-1] + ans[i-1][j];
+            }
+        }
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
