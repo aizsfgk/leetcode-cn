@@ -33,7 +33,29 @@ public:
         // dp[i][j] // 2个数组，所以需要 i, j
         // dp[i][j] => 以下表i为结尾的A和以下标j结尾的B,最长公共子数组长度为dp[i][j]
         //
+        // 因为 dp[0][0] 不好解释，所以从 dp[1][1] 开始
+        //
 
+        int n = nums1.size();
+        int m = nums2.size();
+
+        vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
+
+        int ans = 0;
+        for (int i=1; i<=n; i++) {
+            for (int j=1; j<=m; j++) {
+                // 短一位的进行+1操作
+                if (nums1[i-1] == nums2[j-1]) {
+                    dp[i][j] = dp[i-1][j-1] + 1;
+                }
+
+                if (dp[i][j] > ans) {
+                    ans = dp[i][j];
+                }
+            }
+        }
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
