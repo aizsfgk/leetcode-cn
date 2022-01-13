@@ -65,7 +65,22 @@ public:
 
         // 不适用map
 
-        
+        int left = 0;
+        int right = numbers.size() - 1;
+
+        int sum = 0;
+        while (left < right) {
+            sum = numbers[left] + numbers[right];
+
+            if (sum > target) {
+                right--;
+            } else if (sum < target) {
+                left++;
+            } else {
+                return vector<int> {left+1, right+1};
+            }
+        }
+        return vector<int> {-1, -1};
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
