@@ -71,7 +71,7 @@ public:
         // 如果是偷当前节点，那么左右孩⼦就不能偷，val1 = cur->val + left[0] + right[0]; （如果对下标含义不
         // 理解就在回顾⼀下dp数组的含义）
         int val1 = cur->val + left[0] + right[0];
-        
+
         // 不偷cur
         // 如果不偷当前节点，那么左右孩⼦就可以偷，⾄于到底偷不偷⼀定是选⼀个最⼤的，所以：val2 =
         // max(left[0], left[1]) + max(right[0], right[1]);
