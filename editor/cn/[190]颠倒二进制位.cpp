@@ -46,7 +46,9 @@
 class Solution {
 public:
     uint32_t reverseBits(uint32_t n) {
-        
+        // 转换二进制位
+        //
+        //
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
