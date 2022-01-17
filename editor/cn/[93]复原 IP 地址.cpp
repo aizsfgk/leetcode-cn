@@ -103,6 +103,7 @@ public:
 
     void backtracking(const string &s, int startIdx) {
 
+        // 符合条件的字串,放入ans
         if (startIdx >= s.size() && path.size() == 4) {
             // cout << "path.size:" << path.size() << endl;
 
@@ -111,6 +112,7 @@ public:
         }
 
         for (int i=startIdx; i<s.size(); i++) {
+            // 找到所有的子串
             string str = s.substr(startIdx, i-startIdx+1);
             bool tmp = isValidIP(str);
 
