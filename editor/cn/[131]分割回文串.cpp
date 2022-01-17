@@ -35,11 +35,52 @@ class Solution {
 // 分割回文串
 /*
     如何解题?
+
+    既可以回溯 ， 又可以dp.
+
 */
-
+private:
+    vector<vector<string>> ans;
+    vector<string> path;
 public:
-    vector<vector<string>> partition(string s) {
+    // 是否是回文串：辅助函数
+    bool isPalindrome(const string &s, int startIdx, int endIdx) {
+        while (startIdx < endIdx) {
+            if (s[startIdx] != s[endIdx]) {
+                return false;
+            }
+            startIdx++;
+            endIdx--;
+        }
+        return true;
+    }
 
+    void backtracking(const string &s, int startIdx) {
+        if (startIdx >= s.size()) {
+            ans.push_back(path);
+            return;
+        }
+
+        for (int i=startIdx; i<s.size(); i++) {
+            if (isPalindrome(s, startIdx, i))  { // 是回文串
+                string str = s.substr(startIdx, i-startIdx+1); // 获取子串
+                path.push_back(str);
+            } else {
+                continue;
+            }
+
+            backtracking(s, i+1);
+            path.pop_back();
+        }
+
+    }
+    vector<vector<string>> partition(string s) {
+        int size = s.size();
+        if (size == 0)
+            return ans;
+
+        backtracking(s, 0);
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
