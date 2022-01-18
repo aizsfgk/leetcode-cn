@@ -40,9 +40,15 @@
 class Solution {
 private:
     vector<vector<string>> ans;
+
     // n是棋盘大小
     // row表示当前递归到棋盘的第几行
+
+    // 从第0行开始(第一行)
     void backtracking(int n, int row, vector<string> &chessboard) {
+
+        // 行数到达则放入
+        // chessboard 相当于path
         if (row == n) {
             ans.push_back(chessboard);
             return;
@@ -59,14 +65,27 @@ private:
 
     bool isValid(int row, int col, vector<string> &chessboard, int n) {
         // 1. 检查列
-        for (int i=0; i<row; i++) {
-
+        for (int i=0; i<row; i++) { // 这是一个剪枝
+            if (chessboard[i][col] == 'Q') {
+                return false;
+            }
         }
 
         // 2. 检查 45角度
-        
+        for (int i=row-1, j=col-1; i>=0 && j>=0; i--,j--) {
+            if (chessboard[i][j] == 'Q') {
+                return false;
+            }
+        }
 
         // 3. 检查135角度
+        for (int i=row-1,j=col+1; i>=0 && j<n; i--, j++) {
+            if (chessboard[i][j] == 'Q') {
+                return false;
+            }
+        }
+
+        return true;
     }
 public:
     vector<vector<string>> solveNQueens(int n) {
@@ -74,8 +93,11 @@ public:
         //
         //
 
+        // 初始化一个棋盘
         vector<string> chessboard(n, string(n, '.'));
+        // 然后进行回溯递归
         backtracking(n, 0, chessboard);
+
         return ans;
     }
 };
