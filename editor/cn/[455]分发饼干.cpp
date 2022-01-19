@@ -44,7 +44,9 @@ class Solution {
 public:
     int findContentChildren(vector<int>& g, vector<int>& s) {
         // 对胃口和饼干进行排序
+        // g 胃口
         sort(g.begin(), g.end());
+        // s 饼干
         sort(s.begin(), s.end());
 
         // 从后向前进行查找符合条件的饼干
