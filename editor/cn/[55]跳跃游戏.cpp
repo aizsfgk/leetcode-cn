@@ -42,17 +42,21 @@ public:
         if (nums.empty())
            return false;
 
-        // 能跳几步？，一开始是0步
-        int k = 0;
-        // 遍历
-        for (int i=0; i<=k; i++) {
+        // 一开始可以覆盖的范围
+        int cover = 0;
 
+        // 遍历
+        for (int i=0; i<=cover; i++) {
+
+            // 当前位置，可以跳的最大范围
             int tmp = nums[i] + i;
+
             // 最多能跳多少步
-            k = max(tmp, k);
+            cover = max(tmp, cover);
 
             // 已经跳到了最后
-            if (k >= nums.size()-1) {
+            // 确保覆盖范围大于最后的索引值
+            if (cover >= nums.size()-1) {
                 return true;
             }
         }
