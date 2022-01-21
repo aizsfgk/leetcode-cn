@@ -53,8 +53,59 @@ class Solution {
 private:
 
 public:
+    // gas 加油站拥有的油
+    // cost 跑到下一个加油站，需要消耗的油
     int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+    /*
+        // 思路：
+        // 贪心算法1
+        int curSum = 0;
+        int min = INT_MAX; // 从起点出发，邮箱里的油量最小值
+        for (int i=0; i<gas.size(); i++) {
+            int rest = gas[i] - cost[i];
+            curSum += rest;
+            if (curSum < min) {
+                min = curSum;
+            }
+        }
 
+        // 情况⼀：如果gas的总和⼩于cost总和，那么⽆论从哪⾥出发，⼀定是跑不了⼀圈的
+        if (curSum < 0) return -1;
+
+        // 情况⼆：rest[i] = gas[i]-cost[i]为⼀天剩下的油，i从0开始计算累加到最后⼀站，如果累加没有出现负数，说
+        // 明从0出发，油就没有断过，那么0就是起点。
+        if (min >= 0) {
+            return 0;
+        }
+
+        // 情况三：如果累加的最⼩值是负数，汽⻋就要从⾮0节点出发，从后向前，看哪个节点能这个负数填平，能把
+        // 这个负数填平的节点就是出发节点。
+        for (int i= gas.size() - 1; i>=0; i--) {
+            int rest = gas[i] - cost[i];
+            min += rest;
+            if (min >= 0) {
+                return i;
+            }
+        }
+
+        return -1;
+    */
+        // 贪心算法2
+        // 如果前边小于0，则后边可以补齐
+        int curSum = 0;
+        int totalSum = 0;
+        int start = 0;
+        for (int i=0; i<gas.size(); i++) {
+            curSum += gas[i] - cost[i];
+            totalSum += gas[i] - cost[i];
+            if (curSum < 0) {
+                start = i+1;
+                curSum = 0;
+            }
+        }
+
+        if (totalSum < 0) return -1;
+        return start;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
