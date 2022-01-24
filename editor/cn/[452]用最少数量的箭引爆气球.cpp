@@ -58,9 +58,34 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    // 这个比较函数 static 必须是静态的
+    static bool cmp(vector<int> &a, vector<int> &b) {
+        return  a[0] < b[0];
+    }
 public:
     int findMinArrowShots(vector<vector<int>>& points) {
+        // 思路：
+        //   局部最优：当将气球重叠，射出的箭最少
+        //   全局最优: 使用该方法，引爆所有的箭则最少
+        //
+        // 步骤：
+        //  1. 排序
+        if (points.size() == 0) return 0;
+        sort(points.begin(), points.end(), cmp);
 
+        // 开始遍历
+        int ans = 1;
+        for (int i=1; i<points.size(); i++) {
+            // 如果两排气球不挨着，则箭+1
+            if (points[i][0] > points[i-1][1]) {
+                ans++;
+            } else { // 两排气球挨着，则更新最小右边界
+                // 为之后使用
+                points[i][1] = min(points[i-1][1], points[i][1]);
+            }
+        }
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
