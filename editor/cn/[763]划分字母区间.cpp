@@ -29,7 +29,27 @@
 class Solution {
 public:
     vector<int> partitionLabels(string s) {
+        // hash表
+        int hash[27] = {0};
+        // 记录每个字符的最右边索引
+        for (int i=0; i<s.size(); i++) {
+            hash[s[i] - 'a'] = i;
+        }
 
+        // 区间边界
+        int left = 0;
+        int right = 0;
+        vector<int> ans;
+        for (int i=0; i<s.size(); i++) {
+            right = max(right, hash[s[i] - 'a']);
+
+            // 如果索引相等，放入结果集
+            if (right == i) {
+                ans.push_back(right - left+1);
+                left = i+1;
+            }
+        }
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
