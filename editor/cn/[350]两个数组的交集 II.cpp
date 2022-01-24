@@ -42,11 +42,22 @@
 class Solution {
 public:
     vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
-        //
-        //
-        //
-        //
+        vector<int> ans;
 
+        unordered_map<int, int> myMap;
+        for (int num : nums1) {
+            myMap[num]++;
+        }
+
+        ///
+        for (int i=0; i<nums2.size(); i++) {
+            if (myMap[nums2[i]] > 0) {
+                ans.push_back(nums2[i]);
+                myMap[nums2[i]]--;
+            }
+        }
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

@@ -35,7 +35,9 @@
 class Solution {
 public:
     bool repeatedSubstringPattern(string s) {
-
+        // 这个解法太牛逼了
+        // 厉害了
+        return (s+s).find(s, 1) != s.size();
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

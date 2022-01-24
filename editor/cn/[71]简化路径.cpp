@@ -63,7 +63,16 @@
 class Solution {
 public:
     string simplifyPath(string path) {
-
+        // 1. 按照 / 分割
+        vector<string> paths;
+        int last_idx = 0;
+        for (int i=1; i<path.size(); i++) {
+            if (path[i] == '/') {
+                string str = path.substr(last_idx+1, i - last_idx - 1)
+                if (str)
+                paths.push_back();
+            }
+        }
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
