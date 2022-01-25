@@ -64,7 +64,7 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class MonotonicQueue {
 private:
-    deque<int> data;
+    deque<int> data; // 双端队列
 public:
     void push(int n) {
         while (!data.empty() && data.back() < n)
@@ -90,12 +90,14 @@ public:
         int i;
 
         for (i=0; i<nums.size(); i++) {
+            // 如果不满足K的长度，则一天添加
             if (i < k-1) {
+
                 window.push(nums[i]);
             } else {
                 window.push(nums[i]);
                 res.push_back(window.max());
-                window.pop(nums[i-k+1]);
+                window.pop(nums[i-k+1]); // 扔掉数组前边的元素
             }
         }
         return res;
