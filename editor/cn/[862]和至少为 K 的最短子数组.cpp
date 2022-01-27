@@ -48,7 +48,7 @@ public:
     int shortestSubarray(vector<int>& nums, int k) {
         // 思路:
         //
-        //
+        // 前缀和 + 单调队列
         //
         if (nums.empty())
             return -1;
