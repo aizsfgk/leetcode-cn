@@ -45,22 +45,19 @@ public:
         int n = nums.size();
 
 
-        double ans = DBL_MIN;
+        double ans = -100000;
         for (int i=0; i<k; i++) {
-            window += double(nums[i]);
-            cout << "window: " << window << endl;
-            cout << "window/k: " << window/k << endl;
-            cout << "ans1: " << ans << endl;
-            double tmp = window/double(k);
-            ans = max(tmp, ans);
-            cout << "ans2: " << ans << endl;
+            window += (double)nums[i];
         }
+
+        double tmp = window/k;
+        ans = max(tmp, ans);
 
         for (int i=k; i<n; i++) {
             // 减去上一个元素
-            window = window - double(nums[i-k]);
+            window = window - (double)nums[i-k];
             // 加上下一个元素
-            window = window + double(nums[i]);
+            window = window + (double)nums[i];
             ans = max(ans, window/k);
         }
 

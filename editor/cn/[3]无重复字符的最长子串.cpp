@@ -61,7 +61,7 @@ public:
             right++;
             window[c]++;
 
-            while (window[c] > 1) {
+            while (window[c] > 1) { // 需要收缩
                 char d = s[left];
                 left++;
                 window[d]--;
