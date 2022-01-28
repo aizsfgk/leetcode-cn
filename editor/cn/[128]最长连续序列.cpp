@@ -34,7 +34,12 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-
+        //
+        // 问题：最长连续序列：
+        // 思路：并差集
+        //
+        //
+        //
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
