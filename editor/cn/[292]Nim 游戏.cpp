@@ -54,6 +54,7 @@ class Solution {
 public:
     bool canWinNim(int n) {
 
+
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
