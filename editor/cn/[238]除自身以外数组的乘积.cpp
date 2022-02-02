@@ -25,9 +25,25 @@ class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
         // 不能使用除法
-        //
+        // O(n) 时间内完成
+        int n = nums.size();
+        if (n == 0) return  vector<int>();
 
+        vector<int> ans(n, 1);
+        // 下三角
+        for (int i=1; i<n; i++) {
+            ans[i] = ans[i-1] * nums[i-1];
+        }
 
+        // 上三角
+        int tmp = 1;
+        for (int i=n-2; i>=0; i--) {
+            tmp *= nums[i+1];
+            ans[i] = tmp * ans[i]; // 下三角已经求得了
+        }
+
+        // 返回答案
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

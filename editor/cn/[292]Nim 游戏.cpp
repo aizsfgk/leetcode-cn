@@ -53,8 +53,10 @@
 class Solution {
 public:
     bool canWinNim(int n) {
+        // 不为4的倍数，则先手必胜
+        return n % 4 != 0;
 
-
+        // return n & 3 != 0;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

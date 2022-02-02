@@ -66,24 +66,47 @@
  * };
  */
 class Solution {
-private:
-    vector<int> res;
+//private:
+//    vector<int> res;
+//
+//    void inorder(TreeNode *cur) {
+//        if (cur == nullptr) {
+//            return;
+//        }
+//        inorder(cur->left);
+//        res.push_back(cur->val);
+//        inorder(cur->right);
+//    }
+//public:
+//
+//    vector<int> inorderTraversal(TreeNode* root) {
+//
+//        inorder(root);
+//
+//        return res;
+//    }
 
-    void inorder(TreeNode *cur) {
-        if (cur == nullptr) {
-            return;
-        }
-        inorder(cur->left);
-        res.push_back(cur->val);
-        inorder(cur->right);
-    }
+    // 非递归版本
 public:
-
     vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        if (root == nullptr)
+            return ans;
 
-        inorder(root);
+        stack<TreeNode *> stk;
+        while (root != nullptr || !stk.empty()) {
+            while (root != nullptr) {
+                stk.push(root);
+                root = root->left;
+            }
 
-        return res;
+            ans.push_back(root->val);
+
+            root = root->right;
+        }
+
+        return ans;
     }
+
 };
 //leetcode submit region end(Prohibit modification and deletion)

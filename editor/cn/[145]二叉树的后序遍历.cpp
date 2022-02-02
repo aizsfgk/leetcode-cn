@@ -46,7 +46,7 @@ public:
 //        post(root);
 //        return ret;
 //    }
-
+/*
     // 非递归版本
     vector<int> postorderTraversal(TreeNode* root) {
         if (root == nullptr) {
@@ -88,6 +88,32 @@ public:
         }
 
         return ret;
+    }
+*/
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        if (root == nullptr)
+            return ans;
+
+        stack<TreeNode *> stk;
+        stk.push(root);
+
+        while (!stk.empty()) {
+            TreeNode *node = stk.top(); stk.pop();
+            ans.push_back(node->val);
+
+            if (node->left) {
+                stk.push(node->left);
+            }
+
+            if (node->right) {
+                stk.push(node->right);
+            }
+        }
+
+        reverse(ans.begin(), ans.end());
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

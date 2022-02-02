@@ -35,7 +35,45 @@
 class Solution {
 public:
     int divide(int dividend, int divisor) {
+        // 思路
+        // 不使用除法，模拟除法 --> 倍增乘法：
+        // 每次用被除数减去[除数的最大的2^x]，这样可以极大地增加处理的速度
 
+        // 溢出情况
+        if (dividend == INT_MIN && divisor == -1) {
+            return INT_MAX;
+        }
+
+        if (divisor == 1)
+            return dividend;
+
+        // 记录结果的符号
+        int sign = -1;
+        if ((dividend > 0 && divisor > 0) || (dividend < 0 && divisor < 0)) {
+            sign = 1;
+        }
+
+        // 全部转成负数，防止溢出
+        dividend = dividend > 0 ? -dividend : dividend;
+        divisor = divisor > 0 ? -divisor : divisor;
+
+        int ans = 0;
+
+        // 倍乘法; 比较的时候，与正数正好相反
+        while(dividend <= divisor) {
+            int tmp = divisor, count = 1;
+
+            // 这里不要写成 tmp + tmp >= dividend, 可能溢出
+            while (tmp >= dividend - tmp) {
+                tmp += tmp;
+                count += count;
+            }
+
+
+            dividend -= tmp;
+            ans += count;
+        }
+        return sign < 0 ? -ans : ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

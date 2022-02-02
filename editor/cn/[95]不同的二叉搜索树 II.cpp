@@ -45,13 +45,43 @@
  */
 class Solution {
 private:
-    vector<TreeNode*> ans;
+    vector<TreeNode*> generateTreesNew(int start, int end) {
+
+        if (start > end) {
+            return { nullptr };
+        }
+
+        vector<TreeNode *> allTrees;
+        // 可枚举根
+        for (int i=start; i<=end; i++) {
+            // 获取所有可能的左子树集合
+            vector<TreeNode *> leftTrees = generateTreesNew(start, i-1);
+
+            vector<TreeNode *> rightTrees = generateTreesNew(i+1, end);
+
+            // 从左子数集合中选取一棵左子树，从右子树集合中选一棵右子树，拼接到根结点上
+            for (auto &left : leftTrees) {
+                for (auto &right : rightTrees) {
+                    TreeNode *curTree = new TreeNode(i);
+                    curTree->left = left;
+                    curTree->right = right;
+
+                    // 加到结果中
+                    allTrees.push_back(curTree);
+                }
+            }
+        }
+
+        return allTrees;
+    }
 
 public:
     vector<TreeNode*> generateTrees(int n) {
-        for (int i=1; i<=n; i++) {
-
+        if (!n) {
+            return {};
         }
+
+        return generateTreesNew(1, n);
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
