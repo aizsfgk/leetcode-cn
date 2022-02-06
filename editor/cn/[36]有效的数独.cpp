@@ -68,7 +68,42 @@
 class Solution {
 public:
     bool isValidSudoku(vector<vector<char>>& board) {
+        // 检查数独是否有效
+        /*
+        有效的数独满足以下三个条件：
 
+            同一个数字在每一行只能出现一次；
+            同一个数字在每一列只能出现一次；
+            同一个数字在每一个小九宫格只能出现一次。
+
+
+
+        */
+
+        // 使用array代替hashTable, 分别表示 行， 列， 小九宫格
+        int row[9][9] = {0};
+        int col[9][9] = {0};
+        int box[9][9] = {0};
+
+        // i 表示行
+        for (int i=0; i<9; i++) {
+            // j表示列
+            for (int j=0; j<9; j++) {
+                // 如果是 . 则直接跳过
+                if (board[i][j] == '.') continue;
+
+                // 获取当前的数字
+                int curNum = board[i][j] - '1';
+
+                // 如果 (行上|| 列上 || 小格子) 存在
+                if (row[i][curNum] || col[j][curNum] || box[i/3*3 + j/3][curNum]) return false;
+
+                // 进行赋值
+                row[i][curNum] = col[j][curNum] =  box[i/3*3 + j/3][curNum] = 1;
+            }
+        }
+
+        return true;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

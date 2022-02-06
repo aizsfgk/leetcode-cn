@@ -46,6 +46,8 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
+    // 思路：
+    //    本题又是滑动窗口
     vector<int> findSubstring(string s, vector<string>& words) {
 
     }

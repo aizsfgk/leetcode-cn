@@ -45,9 +45,35 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    static bool cmp(string a, string b) {
+        return stol(a+b) > stol(b+a);
+    }
 public:
     string largestNumber(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 1) {
+            return to_string(nums[0]);
+        }
 
+        vector<string> numsStr;
+        for (int num : nums) {
+            numsStr.push_back(to_string(num));
+        }
+
+        sort(numsStr.begin(), numsStr.end(), cmp);
+
+        string ans = "";
+        for (string numStr : numsStr) {
+             ans += numStr;
+        }
+
+        int k = 0;
+        while (k < n-1 && ans[k] == '0') {
+            k++;
+        }
+
+        return ans.substr(k);
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

@@ -69,12 +69,56 @@
  */
 class Solution {
 public:
-    // 反转单个链表
 
+    // 反转单个链表
+    ListNode* reverse(ListNode *head) {
+        ListNode *pre = nullptr;
+        ListNode *cur = head;
+        ListNode *next;
+        while (cur != nullptr) {
+            next = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
 
     // 反转一次链表
     ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode *dummy = new ListNode(-1);
+        dummy->next = head;
 
+        // 记录当前待翻转段的前一个结点
+        ListNode *pre = dummy;
+        // 记录当前待翻转端的最后一个结点
+        ListNode *end = dummy;
+
+        while (end->next != nullptr) {
+            // 找到本来结尾结点
+            for (int i=0; i<k && end != nullptr; i++) end = end->next;
+
+            // 如果结尾结点为空，表示已经结束，break;
+            if (end == nullptr)
+                break;
+
+            // 开始结点
+            ListNode *start = pre->next;
+            // 下一个待翻转链表的开始结点
+            ListNode *next = end->next;
+            // 本次尾部结点断开
+            end->next = nullptr;
+            // 翻转
+            pre->next = reverse(start);
+            // 此时， start 是本段链表的结尾了
+            start->next = next;
+
+            // 跟新 新的prev
+            pre = start;
+            end = pre; // end 和 start 一致
+        }
+
+        return dummy->next;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
