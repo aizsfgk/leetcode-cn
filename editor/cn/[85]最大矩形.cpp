@@ -57,6 +57,9 @@
 class Solution {
 public:
     int maximalRectangle(vector<vector<char>>& matrix) {
+        //
+        // 思路：最大矩形
+        //
 
     }
 };

@@ -24,7 +24,7 @@
 //
 // 
 // 0 <= nums.length <= 105 
-// -109 <= nums[i] <= 109 
+// -109 <= nums[i] <= 109
 // 
 // Related Topics 并查集 数组 哈希表 
 // 👍 1053 👎 0
@@ -36,10 +36,31 @@ public:
     int longestConsecutive(vector<int>& nums) {
         //
         // 问题：最长连续序列：
-        // 思路：并差集
+        //      排序
+        int n = nums.size();
+        if (n <= 1) {
+            return n;
+        }
+
         //
+        // 可以使用排序
         //
+        sort(nums.begin(), nums.end());
+
+        int ans = 1, dur = 1;
+        for (int i=1; i<n; i++) {
+            if (nums[i] != nums[i-1]) {
+                if (nums[i-1]+1 == nums[i]) {
+                    dur++;
+                } else {
+                    ans = max(ans, dur);
+                    dur = 1;
+                }
+            }
+        }
+
         //
+        return max(ans, dur);
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

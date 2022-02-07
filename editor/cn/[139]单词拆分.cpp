@@ -45,9 +45,46 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    set<string> mySet;
 public:
-    bool wordBreak(string s, vector<string>& wordDict) {
+    // 必须每一步都是 true, 最后才是true
+    bool backtracking(const string &s, map<int, bool> &memo, int startIdx) {
+        // 可以遍历到结尾，则成功true
+        if (startIdx >= s.size()) {
+            return true;
+        }
 
+        // 加入记忆化
+        // 这里相当于减枝
+        auto it = memo.find(startIdx);
+        if (it != memo.end()) {
+            return it->second;
+        }
+
+        for (int i=startIdx; i<s.size(); i++) {
+            string subStr = s.substr(startIdx, i-startIdx+1);
+            auto it = mySet.find(subStr);
+            if (it != mySet.end() && backtracking(s, memo, i+1)) {
+                memo[startIdx] = true;
+                return true;
+            }
+        }
+
+        memo[startIdx] = false;
+        return false;
+    }
+    bool wordBreak(string s, vector<string>& wordDict) {
+        // 1. 构建一个集合
+        for (int i=0; i<wordDict.size(); i++) {
+            mySet.insert(wordDict[i]);
+        }
+
+        // 2. 备忘录
+        map<int, bool> memo;
+
+        // 进行回溯
+        return backtracking(s, memo, 0);
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

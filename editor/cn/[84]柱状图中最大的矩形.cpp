@@ -39,6 +39,17 @@ class Solution {
 // time: O(n)
 // space: O(n)
 public:
+    /*
+        思路：
+             1. 以一根柱子为例heights[i]，我们需要找该柱子不小于其高度的柱子，向左右2边扩展；
+                换一句话说，就是我们需要找到首次小于该柱子的柱子；这样这两根柱子之间（不包括其本身）的所有柱子
+                高度均不小于heights[i]
+             2. 
+
+
+
+             84 和 85 两道题具有类似性
+    */
     int largestRectangleArea(vector<int>& heights) {
         // 1. 使用单调栈来解决该问题
         int n = heights.size();
@@ -47,7 +58,7 @@ public:
         vector<int> left(n), right(n, n);
 
         // 3. 开始遍历heights
-        stack<int> monoStk; // 单调队列 这个单词不错，可以使用
+        stack<int> monoStk; // 单调栈（单调递增） 这个单词不错，可以使用
         for (int i=0; i<n; i++) {
             while (!monoStk.empty() && heights[i] < heights[monoStk.top()]) {
                 // 这里需要入右单调栈
@@ -59,6 +70,7 @@ public:
             left[i] = monoStk.empty() ? -1 : monoStk.top();
             monoStk.push(i);
         }
+
 
         // 找到最大结果
         int ans = 0;
