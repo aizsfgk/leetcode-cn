@@ -46,9 +46,48 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    // 原始棋盘, 行, 列
+    void dfs(vector<vector<char>>& grid, int row, int col) {
+        // 修改
+        int m = grid.size();
+        int n = grid[0].size();
+
+        // 深度优先搜索
+        // 能到达的都标记为0
+        grid[row][col] = '0';
+
+        // 四个方向
+        if (row-1 >= 0 && grid[row-1][col] == '1') dfs(grid, row-1, col);
+        if (row+1 <= m-1 && grid[row+1][col] == '1') dfs(grid, row+1, col);
+        if (col-1 >= 0 && grid[row][col-1] == '1') dfs(grid, row, col-1);
+        if (col+1 <= n-1 && grid[row][col+1] == '1') dfs(grid, row, col+1);
+    }
+
 public:
     int numIslands(vector<vector<char>>& grid) {
+        //
+        // 深度优先搜索
+        //
+        int m = grid.size(); // 行
 
+        if (!m) {
+            return 0;
+        }
+
+        int n = grid[0].size();
+
+        int ans = 0;
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; j++) {
+                if (grid[i][j] == '1') {
+                    ans++;
+                    dfs(grid, i, j);
+                }
+            }
+        }
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
