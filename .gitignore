@@ -1,3 +1,5 @@
 editor/cn/doc
 editor/cn/*.md
-all.json
+editor/cn/*.json
+editor/cn/all.json  
+
