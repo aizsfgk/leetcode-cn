@@ -44,7 +44,28 @@
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        
+        // 暴力解
+/*
+        for (const auto &row : matrix) {
+            for (const auto &ele: row) {
+                if (ele == target) {
+                    return true;
+                }
+            }
+        }
+        return false;
+*/
+
+        //
+        // 二分查找; 对每一行都执行二分
+        //
+        for (const auto &row : matrix) {
+            auto it = lower_bound(row.begin(), row.end(), target);
+            if (it != row.end() && *it == target) {
+                return true;
+            }
+        }
+        return false;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
