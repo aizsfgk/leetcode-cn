@@ -42,8 +42,75 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    // 深度优先搜索
+    /*
+        思路：
+            存在前后依赖关系的处理，使用拓扑排序；
+            建立邻接表，入队为0的元素进入队列；
+            元素出队，对应的入度为0的元素，进入队列；
+    */
+    vector<bool> onPath;
+    vector<bool> visited;
+    bool hasCycle = false;
+
+    // 1. 建图
+    vector<vector<int>> buildGraph(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> graph(numCourses);
+
+        for (auto edge : prerequisites) {
+            int from = edge[1];
+            int to = edge[0];
+            graph[from].push_back(to);
+        }
+
+        return graph;
+    }
+
+    // 2. 开始DFS
+    void traverse(const vector<vector<int>> &graph, int s) {
+        // 是否已经在路径上了，判断有无环
+        if (onPath[s]) {
+            hasCycle = true;
+            return;
+        }
+
+        // 已经访问过这个节点
+        if (visited[s]) {
+            return;
+        }
+
+        // 前序遍历
+        visited[s] = true;
+        onPath[s] = true;
+
+        for (int t : graph[s]) {
+            traverse(graph, t);
+        }
+
+        // 后续遍历
+        onPath[s] = false;
+    }
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        // 本质： 判断有向图是否存在环
+        //
+        // 步骤：
+        //      1. 建图
+        //      2. 深度优先/广度优先遍历
+        //      3. 使用使用判断
+        //      4. 是否有环
+        //
+
+        vector<vector<int>> graph = buildGraph(numCourses, prerequisites);
+        onPath.resize(numCourses);
+        visited.resize(numCourses);
+
+        for (int i=0; i<numCourses; i++) {
+            traverse(graph, i);
+        }
+
+        return !hasCycle;
 
     }
 };
