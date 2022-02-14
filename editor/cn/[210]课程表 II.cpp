@@ -119,6 +119,7 @@ private:
     */
     vector<int> inDegree;
 
+    // 1. 建图
     vector<vector<int>> buildGraph(int numCourses, vector<vector<int>> &prerequisites) {
         vector<vector<int>> graph(numCourses);
         for (auto edge : prerequisites) {
@@ -149,7 +150,7 @@ public:
         // 如果队列不为空
         while (!que.empty()) {
             // 拿到头节点
-            int head = que.front(); que.pop();
+            int head = que.front(); que.pop(); // 只要入队的；入度可定为0
 
             // 放入
             ans.push_back(head);
