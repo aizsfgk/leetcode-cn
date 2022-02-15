@@ -51,7 +51,69 @@
 class Solution {
 public:
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+    /*
+        // 最普通的hash解法
+        unordered_map<int,int> myMap;
+        for (int i=0; i<nums2.size(); i++) {
+           myMap[nums2[i]] = i;
+        }
 
+        int n = nums1.size();
+        vector<int> ans;
+        for (int i=0; i<n; i++) {
+            auto it = myMap.find(nums1[i]);
+            if (it != myMap.end()) {
+                int idx = it->second;
+                int ele = -1;
+                while ( ++idx < nums2.size()) {
+                    if (nums2[idx] > it->first) {
+                        ele = nums2[idx];
+                        break;
+                    }
+                }
+                ans.push_back(ele);
+            }
+        }
+
+        // 单调栈如何解决 ???
+
+        return ans;
+
+    */
+
+    /*
+
+
+        //输入：nums1 = [4,1,2], nums2 = [1,3,4,2].
+        //输出：[-1,3,-1]
+
+    */
+
+        int n = nums1.size();
+        int m = nums2.size();
+
+        stack<int> monoStk;
+        unordered_map<int,int> arrMap;
+
+        // 后续遍历
+        // 递减单调栈
+        for (int i=m-1; i>=0; i--) {
+            int x = nums2[i];
+            while (!monoStk.empty() && x >= monoStk.top()) {
+                monoStk.pop();
+            }
+
+            arrMap[x] = !monoStk.empty() ? monoStk.top() : -1;
+
+            monoStk.push(x);
+        }
+
+        vector<int> ans;
+        for (int i=0; i<n; i++) {
+            ans.push_back(arrMap[nums1[i]]);
+        }
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
