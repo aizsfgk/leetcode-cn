@@ -40,6 +40,31 @@ class Solution {
 public:
     vector<int> nextGreaterElements(vector<int>& nums) {
 
+        int n = nums.size();
+
+        vector<int> ans(n, -1);
+
+        stack<int> monoStk;
+        for (int i=0; i<n; i++) {
+            int x = nums[i];
+            while (!monoStk.empty() && x > nums[monoStk.top()]) {
+                ans[monoStk.top()] = x;
+                monoStk.pop();
+            }
+
+            monoStk.push(i);
+        }
+
+
+        for (int i=0; i<n; i++) {
+            int x = nums[i];
+            while (!monoStk.empty() && x > nums[monoStk.top()]) {
+                ans[monoStk.top()] = x;
+                monoStk.pop();
+            }
+        }
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
