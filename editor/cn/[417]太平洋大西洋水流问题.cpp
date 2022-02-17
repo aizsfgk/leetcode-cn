@@ -44,7 +44,8 @@
 class Solution {
 public:
     vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
-
+        // 结果既可以流到大西洋，也可以流到太平洋的点
+        
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

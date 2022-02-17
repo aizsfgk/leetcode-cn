@@ -45,9 +45,61 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-public:
-    double knightProbability(int n, int k, int row, int column) {
+private:
+    int dirs[8][2] = {
+        {1, -2}, {2, -1}, {2, 1}, {1, 2}, {-1, 2}, {-2, 1}, {-2, -1}, {-1, -2}
+    };
 
+public:
+    /*
+
+        一个骑士有 8 种可能的走法，骑士会从中以等概率随机选择一种。部分走法可能会让骑士离开棋盘，另外的走法则会让骑士移动到棋盘的其他位置，并且剩余的移动次数会减少1。
+
+        dp[skep][i][j]:
+
+        1. i, j不在棋盘上；dp[skep][i][j] = 0;
+        2. skep = 0, dp[skep][i][j] = 1
+        3. 其他情况：dp[step][i][j]= 1/8 * dp[step−1][i+di][j+dj] * di<->dj ∑
+
+    */
+    double knightProbability(int n, int k, int row, int column) {
+        if (k == 0) {
+            return double(1);
+        }
+
+        // 动态规划?   // baseCase
+        // 记忆化搜索? // 记忆板
+
+        // 怎么想到动态规划的? // 记忆我是看到棋盘默认就想到了
+
+        vector<vector<vector<double>>> dp(k+1, vector<vector<double>>(n, vector<double>(n)));
+
+        // 步数
+        for (int step=0; step <= k; step++) {
+            for (int i=0; i<n; i++) {
+                for (int j=0; j<n; j++) {
+                    if (step == 0) { // 步子为0,肯定是1
+                        dp[step][i][j] = 1;
+                    } else {
+
+                        for (auto dir : dirs) {
+                            int ni = dir[0] + i;
+                            int nj = dir[1] + j;
+                            // 状态转移方程式 怎么来的?
+                            //
+                            // 有8个方向，从这8是否可以有入口呢?
+                            //   1/8;
+                            //
+                            if (ni >= 0 && ni < n && nj >=0 && nj <n) {
+                                dp[step][i][j] += dp[step-1][ni][nj] / 8; /// 到达这个位置相加
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return dp[k][row][column];
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
