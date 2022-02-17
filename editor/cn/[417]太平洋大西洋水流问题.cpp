@@ -42,10 +42,57 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    int m;
+    int n;
+    int dirs[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+    void dfs(vector<vector<int>> &heights, vector<vector<bool>> &vis, int i, int j) {
+        if (vis[i][j]) {
+            return;
+        }
+
+        vis[i][j] = true;
+        int x = heights[i][j];
+        for (auto dir : dirs) {
+            int ni = i + dir[0];
+            int nj = j + dir[1];
+            if (ni >= 0 && ni < m && nj>=0 && nj <n && !vis[ni][nj] && heights[ni][nj] >= x) {
+                dfs(heights, vis, ni, nj);
+            }
+        }
+    }
 public:
     vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
         // 结果既可以流到大西洋，也可以流到太平洋的点
-        
+        m = heights.size();
+        n = heights[0].size();
+
+        vector<vector<bool>> P(m, vector<bool>(n, false));
+        vector<vector<bool>> A(m, vector<bool>(n, false));
+
+        // 左边，上边太平洋； 右边，下边大西洋
+        // 左边和右边
+        for (int i=0; i<m; i++) {
+            dfs(heights, P, i, 0);
+            dfs(heights, A, i, n-1);
+        }
+
+        // 上边和下边
+        for (int j=0; j<n; j++) {
+            dfs(heights, P, 0, j);
+            dfs(heights, A, m-1, j);
+        }
+
+        vector<vector<int>> ans;
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; j++) {
+                if (P[i][j] && A[i][j]) {
+                    ans.push_back({i, j});
+                }
+            }
+        }
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
