@@ -46,11 +46,55 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    int dirs[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 public:
     int maxDistance(vector<vector<int>>& grid) {
-        //
-        // 最大距离
-        //
+        queue<pair<int,int>> que;
+        int m = grid.size();
+        int n = grid[0].size();
+
+        // 先将所有陆地入队
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; j++) {
+                if (grid[i][j] == 1) {
+                    que.push({i, j});
+                }
+            }
+        }
+
+        // 从各个陆地一圈一圈的遍历海洋，最后遍历到的海洋，就是离陆地最远的海洋
+        // BFS
+        bool hasOcean = false;
+        pair<int,int> point;
+        int ans = 0;
+        while (!que.empty()) {
+            point = que.front(); que.pop();
+            int x = point.first;
+            int y = point.second;
+
+            for (auto dir : dirs) {
+                int newX = dir[0] + x;
+                int newY = dir[1] + y;
+                if (newX < 0 || newX >= m || newY < 0 || newY >= n || grid[newX][newY] != 0) {
+                    continue;
+                }
+
+//                ans = max(ans, grid[x][y]); // 可以这里更新最大值
+                grid[newX][newY] = grid[x][y] + 1; // 直接修改grid, 无需额外空间记录是否访问; 1,2,3,4
+
+
+                hasOcean = true;
+                que.push({newX, newY});
+            }
+        }
+
+        if (!hasOcean) {
+            return -1;
+        }
+
+//        return ans;
+        return grid[point.first][point.second] - 1;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
