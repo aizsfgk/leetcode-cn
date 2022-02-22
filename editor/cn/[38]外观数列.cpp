@@ -69,7 +69,35 @@
 class Solution {
 public:
     string countAndSay(int n) {
+        // 思路:
+        //  Sn 由 Sn-1获得
+        //
+        // 所以使用一种类似模拟的方法：
+        // 1 是特殊值
+        //
 
+        string prev = "1";
+
+        for (int i=2; i<=n; i++) {
+            // 当前串是空串
+            string cur = "";
+            int pos = 0;
+            int start = 0;
+
+            // 一个完整的描述
+            while (pos < prev.size()) {
+                while (pos < prev.size() && prev[pos] == prev[start]) {
+                    pos++;
+                }
+
+                cur += to_string(pos-start) + prev[start];
+                start = pos;
+            }
+            // 更新prev
+            prev = cur;
+        }
+
+        return prev;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
