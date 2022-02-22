@@ -47,8 +47,36 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
-    int islandPerimeter(vector<vector<int>>& grid) {
+    int countNeighbour(vector<vector<int>>& grid, int i, int j)
+    {
+        int m = grid.size();
+        int n = grid[0].size();
 
+        // 默认每个正方形小岛四条边
+        // 它有几个邻居小岛就减几条边
+        int res = 4;
+
+        if(i-1 >= 0 && grid[i-1][j] == 1)
+            --res;
+        if(i+1 < m && grid[i+1][j] == 1)
+            --res;
+        if(j-1 >= 0 && grid[i][j-1] == 1)
+            --res;
+        if(j+1 < n && grid[i][j+1] == 1)
+            --res;
+
+        return res;
+    }
+
+    int islandPerimeter(vector<vector<int>>& grid) {
+        int res = 0;
+        for(int i = 0; i < grid.size(); ++i)
+        {
+            for(int j = 0; j < grid[0].size(); ++j)
+                if(grid[i][j] == 1)
+                    res += countNeighbour(grid, i, j);
+        }
+        return res;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
