@@ -81,7 +81,7 @@
 class Solution {
 public:
     vector<string> fullJustify(vector<string>& words, int maxWidth) {
-
+        // 设置
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

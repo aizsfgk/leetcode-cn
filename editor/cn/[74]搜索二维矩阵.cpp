@@ -38,8 +38,48 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
-    bool searchMatrix(vector<vector<int>>& matrix, int target) {
 
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        // 思路
+        /*
+        若将矩阵每一行拼接在上一行的末尾，则会得到一个升序数组，我们可以在该数组上二分找到目标元素。
+        代码实现时，可以二分升序数组的下标，将其映射到原矩阵的行和列上。
+
+
+        */
+        /*
+        int m = matrix.size(), n = matrix[0].size();
+        int low = 0, high = m * n - 1;
+        while (low <= high) {
+            int mid = (high - low) / 2 + low;
+            int x = matrix[mid / n][mid % n];
+            if (x < target) {
+                low = mid + 1;
+            } else if (x > target) {
+                high = mid - 1;
+            } else {
+                return true;
+            }
+        }
+        return false;
+
+
+        */
+        int m = matrix.size(), n = matrix[0].size();
+        int left = 0, right = n * m - 1;
+
+        while (left <= right) {
+            int mid = (right - left) / 2 + left;
+            int x = matrix[mid / n][mid % n];
+            if (x == target) {
+                return true;
+            } else if (x < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return false;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
