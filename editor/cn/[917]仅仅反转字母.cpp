@@ -37,18 +37,51 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
+//class Solution {
+//public:
+//    string reverseOnlyLetters(string s) {
+//        int n = s.size();
+//        if (n<=1) {
+//            return s;
+//        }
+//        // if((ch=97) && (ch<=122))
+//        int left = 0;
+//        int right = n - 1;
+//        while (left < right) {
+//            while (!isChar(s[left]) && left < right) left ++;
+//            while (!isChar(s[right]) && left < right) right--;
+//
+//            if (left < right) {
+//                swap(s[left], s[right]);
+//            } else {
+//                break;
+//            }
+//
+//
+//            left++;
+//            right--;
+//        }
+//
+//        return s;
+//    }
+//
+//    bool isChar(char a) {
+//        return (a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z');
+//    }
+//};
 class Solution {
 public:
     string reverseOnlyLetters(string s) {
         int n = s.size();
-        if (n<=1) {
+        if (n <= 1) {
             return s;
         }
-        // if((ch=97) && (ch<=122))
+
         int left = 0;
         int right = n - 1;
-        while (left < right) {
-            while (!isChar(s[left]) && left < right) left ++;
+
+        while (left < right)) {
+            while (!isChar(s[left]) && left < right) left++;
             while (!isChar(s[right]) && left < right) right--;
 
             if (left < right) {
@@ -57,7 +90,6 @@ public:
                 break;
             }
 
-
             left++;
             right--;
         }
@@ -65,8 +97,8 @@ public:
         return s;
     }
 
-    bool isChar(char a) {
-        return (a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z');
+    bool isChar(char c) {
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

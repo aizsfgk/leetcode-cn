@@ -45,7 +45,38 @@
 class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
+        //
+        vector<int> prev;
+        vector<int> post;
 
+        ListNode *cur = head;
+        while (cur) {
+            if (cur->val < x) {
+                prev.push_back(cur->val);
+            } else {
+                post.push_back(cur->val);
+            }
+
+            cur = cur->next;
+        }
+
+        if (prev.empty() || post.empty()) {
+            return head;
+        }
+
+        ListNode dummy, *curr = &dummy;
+
+        for (int i=0; i<prev.size(); i++) {
+            curr->next = new ListNode(prev[i]);
+            curr = curr->next;
+        }
+
+        for (int i=0; i<post.size(); i++) {
+            curr->next = new ListNode(post[i]);
+            curr = curr->next;
+        }
+
+        return dummy.next;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

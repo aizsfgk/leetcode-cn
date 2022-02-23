@@ -46,10 +46,35 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
-    // 思路：
-    //    本题又是滑动窗口
     vector<int> findSubstring(string s, vector<string>& words) {
+        // 暴力解法
+        vector<int> ans;
 
+        int n = s.size(), m = words.size(), len = words[0].size();
+
+        unordered_map<string, int> search;
+        for (int i=0; i<m; i++) {
+            search[words[i]]++;
+        }
+
+        for (int i=0, j=0; i<n - m*len + 1; i++) {
+            unordered_map<string, int> sub;
+            for (j=0; j<m; j++) {
+                auto word = s.substr(i+ j*len, len);
+
+                if (!search.count(word)) break;
+                if (++sub[word] > search[word]) break;
+            }
+
+            if (j == m) {
+                ans.push_back(i);
+            }
+
+        }
+
+        return ans;
+
+        // TODO 滑动窗口
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
