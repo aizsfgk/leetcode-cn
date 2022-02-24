@@ -55,7 +55,67 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
+        // 合并链表
+        if (head == nullptr)
+            return;
 
+        ListNode *mid = GetMidNode(head);
+
+        ListNode *l1 = head;
+        ListNode *l2 = mid->next;
+        mid->next = nullptr; // 断开链表
+
+        l2 = reverseListNode(l2); // 翻转l2链表
+
+        head = mergeListNode(l1, l2); // 合并1，2链表
+
+    }
+
+    // 获取中间结点
+    ListNode *GetMidNode(ListNode *head) {
+        ListNode *slow = head, *fast = head;
+        while (fast->next && fast->next->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+
+    // 翻转链表
+    ListNode* reverseListNode(ListNode *head) {
+        ListNode *prev = nullptr;
+        ListNode *cur = head;
+        while (cur) {
+            ListNode *next = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = next;
+        }
+
+        return prev;
+    }
+
+    // 合并链表
+    ListNode* mergeListNode(ListNode *l1, ListNode *l2) {
+        ListNode dummy(-1), *cur = &dummy;
+
+        while (l1 && l2) {
+            cur->next = l1;
+            l1 = l1->next;
+            cur = cur->next;
+
+            cur->next = l2;
+            l2 = l2->next;
+            cur = cur->next;
+        }
+
+        if (l1) {
+            cur->next = l1;
+        } else {
+            cur->next = l2;
+        }
+
+        return dummy.next;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
