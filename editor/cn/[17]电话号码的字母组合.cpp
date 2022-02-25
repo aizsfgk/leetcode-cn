@@ -51,12 +51,22 @@ public:
         4. 排列问题：N个数按⼀定规则全排列，有⼏种排列⽅式
         5. 棋盘问题：N皇后，解数独等等
 
+        回溯的本质是一棵 N叉树：
+        1. 集合的大小构成了树的宽度
+        2. 递归的深度构成了树的深度
+
 
         组合：不强调元素顺序
         排列：强调元素顺序
 
         集合的大小构成了树的宽度
         递归的深度构成了数的深度
+
+
+        // 回溯三要素：
+        1. 路径；一般使用私有变量
+        2. 选择列表：遍历选择列表，做选择
+        3. 终止条件：将符合要求的路径放入ans
 
         void backtrace(参数)
 
@@ -105,7 +115,7 @@ public:
     };
 
     // 全局字符串和起始索引
-    void backtracking(string digits, int startIdx) {
+    void backtracking(string &digits, int startIdx) {
         // 结束条件
         if (startIdx == digits.size()) {
             ans.push_back(path);
@@ -115,7 +125,7 @@ public:
         // 找到数字对应的字符串
         string ele = myMap[digits[startIdx]];
 
-        // 遍历每个字符串
+        // 遍历每个字符串;
         for (int i=0; i<ele.size(); i++) {   // 宽度是映射字符串的长度
            path.push_back(ele[i]);
            backtracking(digits, startIdx+1); // 深度是 digits 的长度

@@ -71,7 +71,39 @@
 class Solution {
 public:
     bool isNumber(string s) {
+        // 判断一个字符串数组是否是有效数
+        //
+        //
+        int n = s.size();
 
+        bool hasE = false;
+        unordered_map<char, int> search;
+        for (int i=0; i<n; i++) {
+            if (!isValidChar(s[i])) {
+                return false;
+            }
+
+            search[s[i]] ++;
+        }
+
+        if ((search['-'] > 1 ) || (search['+'] > 1 ) ||
+            (search['.'] > 1) || search['e'] > 1 || search['E'] > 1 ||
+                (search['+'] > 0 && search['-'] > 0) ) {
+            return false;
+        }
+
+
+
+
+
+
+
+
+        return true;
+    }
+
+    bool isValidChar(char c) {
+        if ((c >= '0' && c <= '9') || c == '.' || c == '-' || c == '+' || c == 'E' || c == 'e')
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

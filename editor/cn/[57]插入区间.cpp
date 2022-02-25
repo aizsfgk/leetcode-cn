@@ -64,16 +64,18 @@ public:
         int i=0;
 
         // 这里已经限制住左边界
+        // 原区间 右边界 小于 新区间 左边界
         while (i < n && intervals[i][1] < newInterval[0]) {
             ans.push_back(intervals[i]);
             i++;
         }
 
         // 上一个while 导出 intervals[i][1] >= newInterval[0]; 必有重合
+        // 原区间 左边界 大于 新区间 右边界的时候；停止
         // 然后 intervals[i][0] <= newInterval[1] 开始求最大最小值; 做更新
         while (i < n && intervals[i][0] <= newInterval[1]) {
-            newInterval[0] = min(newInterval[0], intervals[i][0]);
-            newInterval[1] = max(newInterval[1], intervals[i][1]);
+            newInterval[0] = min(newInterval[0], intervals[i][0]); // 最小
+            newInterval[1] = max(newInterval[1], intervals[i][1]); // 最大
             i++;
         }
         ans.push_back(newInterval);
