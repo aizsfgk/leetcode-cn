@@ -1,4 +1,4 @@
-//给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。 
+ //给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。
 //
 // 你可以按 任何顺序 返回答案。 
 //
@@ -50,7 +50,7 @@ private:
 
         for (int i=idx; i<=n; i++) {
             path.push_back(i);  // 处理节点
-            backtracking(n, k, i+1); // 递归
+            backtracking(n, k, i+1); // 递归； 这里+1 所以不是重复的
             path.pop_back(); // 回溯
         }
     }

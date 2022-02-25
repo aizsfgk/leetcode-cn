@@ -65,7 +65,7 @@ private:
         for (int i=startIdx; i<candidates.size() && candidates[i] <= target; i++) {
             // used[i - 1] == true， 说明同⼀树⽀candidates[i - 1]使⽤过
             // used[i - 1] == false，说明同⼀树层candidates[i - 1]使⽤过
-            if (i > 0 && candidates[i-1] == candidates[i] && used[i-1] == false) {
+            if (i > 0 && candidates[i-1] == candidates[i] && used[i-1] == false) { /// 同一层使用过； 之所以要判断 used[i-1] 是因为单个组合里可以有重复元素
                 continue;
             }
 
@@ -82,7 +82,7 @@ public:
             return ans;
 
 
-        used = vector<bool>(candidates.size(), false);
+        used.resize(candidates.size(), false);
 
         sort(candidates.begin(), candidates.end());
 

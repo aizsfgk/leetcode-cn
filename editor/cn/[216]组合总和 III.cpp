@@ -44,7 +44,7 @@ private:
         // 遍历逻辑
         for (int i=startIdx; i<=n; i++) {
             path.push_back(i);
-            backtracking(n, k, i+1, target-i);
+            backtracking(n, k, i+1, target-i); // 因为可选择列表中没有重复元素
             path.pop_back();
         }
     }

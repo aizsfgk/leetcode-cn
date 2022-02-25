@@ -75,7 +75,7 @@ private:
 
         for (int i=idx; i<candidates.size(); i++) {
             path.push_back(candidates[i]);
-            backtracking(candidates, target - candidates[i], i);
+            backtracking(candidates, target - candidates[i], i); // i 是相同的，所有是重复元素
             path.pop_back();
         }
     }
