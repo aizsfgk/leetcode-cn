@@ -38,7 +38,7 @@ private:
     vector<int> path; // 路径
 
     void backtracking(const vector<int> &nums, int startIdx) {
-
+        // 所有的节点都收集
         // 收集自己
         ans.push_back(path);
 

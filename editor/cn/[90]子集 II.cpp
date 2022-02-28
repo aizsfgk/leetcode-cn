@@ -36,9 +36,40 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    vector<vector<int>> ans;
+    vector<int> path;
+
+    void backtracking(vector<int> &nums, int idx) {
+        ans.push_back(path);
+
+        // 终止条件
+        if (idx >= nums.size()) {
+            return;
+        }
+
+        int used[21] = {0};
+        for (int i=idx; i<nums.size(); i++) {
+            if (used[nums[i]+10] != 0) {
+                continue;
+            }
+
+            used[nums[i]+10] = 1;
+            path.push_back(nums[i]);
+            backtracking(nums, i+1);
+            path.pop_back();
+        }
+    }
 public:
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        if (nums.size() == 0)
+            return ans;
 
+        sort(nums.begin(), nums.end()); // 排序很重要；为啥不排序就会出现重复呢???
+
+        backtracking(nums, 0);
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
