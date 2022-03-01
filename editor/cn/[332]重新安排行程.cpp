@@ -45,10 +45,48 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
+/*
+    回溯法
+*/
 class Solution {
+private:
+    // unordered_map<出发机场, map<到达机场,航班次数>> targets;
+    unordered_map<string, map<string, int>> targets;
+    bool backtracking(int ticketNum, vector<string>& result) {
+        if (result.size() == ticketNum + 1) {
+            return true;
+        }
+
+        //
+        // 结果集合最后一个元素
+        //
+        for (pair<const string, int>& target : targets[result.back()]) {
+            if (target.second > 0) {
+                target.second--;
+                result.push_back(target.first);
+
+                if (backtracking(ticketNum, result)) return true;
+
+                result.pop_back();
+                target.second++;
+            }
+        }
+
+        return false;
+    }
 public:
     vector<string> findItinerary(vector<vector<string>>& tickets) {
+        targets.clear();
+        vector<string> result;
 
+        // 记录映射关系
+        for (const vector<string>& vec : tickets) {
+            targets[vec[0]][vec[1]]++;
+        }
+
+        result.push_back("JFK"); // 起始机场
+        backtracking(tickets.size(), result);
+        return result;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

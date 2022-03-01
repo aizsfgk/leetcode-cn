@@ -50,8 +50,71 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
+    /*
     int search(vector<int>& nums, int target) {
+        // 旋转数组
+        int maxIdx = 0;
+        int n = nums.size();
+        for (int i=1; i<n; i++) {
+            if (nums[i] > nums[maxIdx]) {
+                maxIdx = i;
+            }
+        }
 
+
+
+        int ans = -1;
+        ans = binarySearch(nums, target, 0, maxIdx);
+        if (ans >= 0) {
+            return ans;
+        }
+
+        ans = binarySearch(nums, target, maxIdx+1, n-1);
+        return ans;
+    }
+
+    int binarySearch(vector<int>& nums, int target, int left, int right) {
+        while (left <= right) {
+            int mid = left + (right-left)/2;
+
+            if (nums[mid] == target) {
+
+                return mid;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        return -1;
+    }
+    */
+
+    int search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1, mid = 0;
+        while (left <= right) {
+            mid = left + (right - left)/2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            if (nums[left] <= nums[mid]) {
+                if (nums[left] <= target && target < nums[mid]) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            } else {
+                if (nums[mid] < target && target <= nums[right]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+
+        return -1;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

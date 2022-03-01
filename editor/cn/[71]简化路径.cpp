@@ -63,16 +63,44 @@
 class Solution {
 public:
     string simplifyPath(string path) {
-        // 1. 按照 / 分割
-        vector<string> paths;
-        int last_idx = 0;
-        for (int i=1; i<path.size(); i++) {
+        // 思路模拟
+        // 使用栈模拟
+        // 1. \ 跳过
+        // 2. . 跳过
+        // 3. \\ 跳过
+        // 4. .. 如果栈不为空，则pop
+        // 5. 否则 push
+
+        int n = path.size();
+        vector<string> stk;
+
+        for (int i=0; i<n; ) {
             if (path[i] == '/') {
-                string str = path.substr(last_idx+1, i - last_idx - 1)
-                if (str)
-                paths.push_back();
+                i++;
+            } else {
+                int nowIdx = i;
+
+                while (i<n && path[i] != '/') { // 一定要细心
+                    i++;
+                }
+
+                // 字串
+                string sub = path.substr(nowIdx, i-nowIdx);
+                if (sub == ".." && !stk.empty()) {
+                    stk.pop_back();
+                } else if (sub != "." && sub != ".." && !sub.empty()) {
+                    stk.push_back(sub);
+                }
             }
         }
+
+        if (stk.empty()) return "/";
+
+        string ans;
+        for (auto &s : stk) {
+            ans += "/" + s;
+        }
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
