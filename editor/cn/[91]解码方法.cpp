@@ -60,10 +60,83 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
+/*
+// 使用回溯法，会超时
+// length == 100
+class Solution {
+private:
+    int ans = 0;
+
+    // 类似一个切割问题
+    void backtracking(string &s, int idx) {
+        if (idx >= s.size()) {
+            ans++;
+            return;
+        }
+
+        for (int i=idx; i<s.size(); i++) {
+            string sub = s.substr(idx, i-idx+1);
+            if (isValid(sub)) {
+                backtracking(s, i+1);
+            }
+        }
+    }
+
+    bool isValid(string &s) {
+        if (s.empty()) {
+            return false;
+        }
+
+        if (s[0] == '0') {
+            return false;
+        }
+
+        if (s.size() > 3)
+            return false;
+
+        int n = stol(s);
+        return n >= 1 && n <= 26;
+    }
+public:
+    int numDecodings(string s) {
+        if (s[0] == '0') {
+            return 0;
+        }
+
+        backtracking(s, 0);
+        return ans;
+    }
+};
+*/
 class Solution {
 public:
     int numDecodings(string s) {
+        // 1 -> 1
+        // 12 -> 2
+        // 123 -> 2
+        // 1234 -> 2
+        // 1212 -> 3   # 状态转移方程是什么???
+        /*
+        * 只能由位置 `i` 的单独作为一个 `item`，设为 `a`，转移的前提是 `a` 的数值范围为 *[1,9]*，转移逻辑为 *f[i] = f[i - 1]*。
+        * 只能由位置 `i` 的与前一位置（`i-1`）共同作为一个 `item`，设为 `b`，转移的前提是 `b` 的数值范围为 *[10,26]*，转移逻辑为 *f[i] = f[i - 2]*。
+        * 位置 `i` 既能作为独立 `item` 也能与上一位置形成 `item`，转移逻辑为 *f[i] = f[i - 1] + f[i - 2]*。
 
+        */
+        int n = s.size();
+        s = " " + s;
+        vector<int> dp(n+1);
+        dp[0] = 1;
+        for (int i=1; i<=n; i++) {
+            // a : 代表[当前位置]单独形成的item
+            // b : 代表[当前位置]与[前一个位置]共同形成item
+            int a = s[i] - '0';
+            int b = (s[i-1] - '0') * 10 + (s[i] - '0');
+            // 如果a属于有效值，那么 f[i] 可以由f[i-1]转移过来
+            if (1 <= a && a<= 9) dp[i] = dp[i-1];
+            // 如果 b 属于有效值，那么f[i]可以由f[i-2] 或者f[i-1] & f[i-2] 转移过来
+            if (10 <= b && b <= 26) dp[i] += dp[i-2];
+        }
+        return dp[n];
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
