@@ -57,13 +57,15 @@ private:
         for (int i = 0; i < board.size(); i++) { // 遍历⾏
             for (int j = 0; j < board[0].size(); j++) { // 遍历列
                 if (board[i][j] != '.') continue;
-                    for (char k = '1'; k <= '9'; k++) { // (i, j) 这个位置放k是否合适
+
+                for (char k = '1'; k <= '9'; k++) { // (i, j) 这个位置放k是否合适
                     if (isValid(i, j, k, board)) {
                         board[i][j] = k; // 放置k
                         if (backtracking(board)) return true; // 如果找到合适⼀组⽴刻返回
                         board[i][j] = '.'; // 回溯，撤销k
                     }
                 }
+
                 return false; // 9个数都试完了，都不⾏，那么就返回false
             }
         }
