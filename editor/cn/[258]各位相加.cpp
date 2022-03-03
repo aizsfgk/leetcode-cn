@@ -14,13 +14,33 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
+/*
 class Solution {
 public:
     int addDigits(int num) {
         // 思路：
         // 将所有元素，9个一打包，然后相+； 但解决不了正好是9的倍数的问题
         // 所以进行 -1 + 1 操作
+
         return (num - 1) % 9  + 1;
+    }
+};
+*/
+/* 使用迭代法解决这个问题 */
+class Solution {
+public:
+    int addDigits(int num) {
+        // 迭代法
+        int sum;
+        while (num >= 10) {
+            sum = 0;
+            while (num) {
+                sum += num % 10;
+                num /= 10;
+            }
+            num = sum;
+        }
+        return num;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
