@@ -41,26 +41,19 @@
 class Solution {
 public:
     double myPow(double x, int n) {
-        long long N = n;
-        return N >=0 ? multiQuick(x, N) : 1.0 / multiQuick(x, N);
-    }
-
-    /*
-    当我们要计算 x^n 时，我们可以先递归地计算出 yxlfloorn2rfloor  ，其中 lfloorarfloor  表示对 a 进行下取整；
-
-    根据递归计算的结果，如果 n 为偶数，那么 x^n = y^2；如果 n 为奇数，那么 xny2timesx  ；
-
-    递归的边界为 n = 0，任意数的 0 次方均为 1。
-
-    */
-    double multiQuick(double x, long long n) {
-        if (n == 0) {
+        if (n == INT_MIN) // 特殊情况
+            return (x == 1 || x == -1) ? 1 : 0;
+        else if (n == 0) // 最小值
             return 1.0;
-        }
 
-        double y = multiQuick(x, n/2);
+        if (n < 0)
+            return myPow(1/x, -n);
 
-        return n % 2 == 0 ? y * y : y * y * x;
+        if (n % 2 == 0)
+            return myPow(x*x, n/2);
+        else
+            return myPow(x, n-1) * x;
+
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
