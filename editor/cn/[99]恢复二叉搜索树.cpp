@@ -44,9 +44,44 @@
  * };
  */
 class Solution {
+private:
+    vector<int> nums;
+    void midOrder(TreeNode *root) {
+        if (root == nullptr)
+            return;
+        midOrder(root->left);
+        nums.push_back(root->val);
+        midOrder(root->right);
+    }
+
+    void preOrder(TreeNode *root, vector<int> &points) {
+        if (root == nullptr)
+            return;
+
+        if (root->val == points.front()) {
+            root->val = points.back();
+        } else if (root->val == points.back()) {
+            root->val = points.front();
+        }
+
+        preOrder(root->left, points);
+        preOrder(root->right, points);
+    }
 public:
     void recoverTree(TreeNode* root) {
+        midOrder(root);
+        vector<int> nums2(nums.begin(), nums.end());
+        sort(nums2.begin(), nums2.end());
 
+        vector<int> points;
+        for (int i=0; i<nums.size(); i++) {
+            if (nums[i] != nums2[i]) {
+                points.push_back(nums[i]);
+            }
+        }
+
+        preOrder(root, points);
+        return;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
