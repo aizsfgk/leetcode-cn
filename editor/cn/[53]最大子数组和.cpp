@@ -46,10 +46,11 @@
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
-        int ans = nums[0];
+        int ans = INT_MIN;
         int pre = 0;
         for (int i=0; i<nums.size(); i++) {
             pre = max(pre+nums[i], nums[i]);
+//            cout << "pre: " << pre << endl;
             ans = max(ans, pre);
         }
 

@@ -47,9 +47,44 @@
  * };
  */
 class Solution {
+private:
+    map<int, int> memo;
+    TreeNode* myBuildTree(const vector<int> &postorder,
+            int inStart, int inEnd, int postStart, int postEnd) {
+
+        // 终止条件
+        if (inEnd < inStart || postEnd < postStart) return nullptr;
+
+        // 根节点
+        int root = postorder[postEnd];
+        // 根节点在中序遍历中的索引
+        int rootIdx = memo[root];
+
+        /*
+        在找到根节点位置以后，我们要确定下一轮中，左子树和右子树在中序数组和后续数组中的左右边界的位置。
+        1. 左子树-中序数组 `is = is`, `ie = ri - 1`
+        2. 左子树-后序数组 `ps = ps`, `pe = ps + ri - is - 1`
+            (pe计算过程解释，后续数组的起始位置加上左子树长度-1 就是后后序数组结束位置了，
+             左子树的长度 = 根节点索引-左子树)
+        3. 右子树-中序数组 `is = ri + 1, ie = ie`
+        4. 右子树-后序数组` ps = ps + ri - is, pe - 1`
+
+        */
+        TreeNode *node = new TreeNode(root);
+        node->left = myBuildTree(postorder, inStart, rootIdx-1, postStart, postStart + rootIdx - inStart -1);
+        node->right = myBuildTree(postorder, rootIdx+1, inEnd, postStart + rootIdx - inStart, postEnd-1);
+
+        return node;
+    }
 public:
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-
+        // 从中序和后续遍历构造二叉树
+        // 后续遍历确定根节点
+        // 中序遍历确定左右子树
+        for (int i=0; i<inorder.size(); i++) {
+            memo[inorder[i]] = i;
+        }
+        return myBuildTree(postorder, 0, inorder.size()-1, 0, postorder.size()-1);
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
