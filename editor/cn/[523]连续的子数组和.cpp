@@ -52,7 +52,24 @@
 class Solution {
 public:
     bool checkSubarraySum(vector<int>& nums, int k) {
-
+        map<int, int> search;
+        int preSum = 0;
+        for (int i=0; i<nums.size(); i++) {
+            preSum += nums[i];
+            int rem = preSum % k;
+            // 前缀和直接符合，并且i>0, 则return true
+            if (rem == 0 && i > 0) {
+                return true;
+            }
+            // 存在元素，计算距离
+            auto it = search.find(rem);
+            if (it != search.end()) {
+                if ((i - it->second) >= 2) return true;
+            } else {
+                search[rem] = i; // 不存在只更新一次
+            }
+        }
+        return false;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
