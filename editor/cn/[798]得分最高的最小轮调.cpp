@@ -48,11 +48,62 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+/*
+    思考过程：
+    1. 常规思考过程：
+        1. 把每种的轮调方式都一一枚举出来，然后依次计算每种情况的得分 O(n^2) 的时间复杂度；[0-(n-1)]种方案；每个方案都需要遍历一遍
+        2. 怎么分割 :
+            例如：k = 1, (i - 1 + n ) % n -> 0 变成n-1; 1变成0 ==> (i-k+n) % n 是该数字的新index
+        3.
+
+           int maxS = 0;
+           int bestK = 0;
+           for (int k=0; k<n; i++) { // 1-(n-1) 种K的方法; // 相当于从k的角度出发；n^2的时间复杂度会超时
+              int score = 0;
+              // 计算每个K的分数
+              for (int i=0; i<n; i++) {
+                if (nums[(i-k+n)%n] <= i) {
+                    score++;
+                }
+              }
+              if (score > maxS) {
+                maxS = score;
+                bestK = k;
+              }
+           }
+           return bestK;
+
+    2. 差分数组解法
+        1. 既然从 k 的角度思考，会超时，是否可以从分数的角度思考呢??? 什么情况下+分，什么情况下-分，频繁的对区间+-操作
+        考虑等差数组
+
+        基本性质：
+        a. nums[i] <= (i-k+n) % n  : 此时得分
+        b. 新下标必须处于[0, n-1]; 0 <= (i-k+n)%n <= n-1
+        c. k <= (i - nums[i] +n) % n
+        d. (i+1)%nk <= (i+n) % n
+        e. i => nums[i] : 取得加分的一个区间是：[(i+1)%n, (i-nums[i]+n)%n]
+
+        01234567
+        XXXX2XXX
+
+        nums[i] - 1 : 位置开始0
+        也就是移动几步 (i - (nums[i] - 1)) ，开始0
+
+        0步
+        i-(nums[i]-1) 步
+        i+1 步
+
+
+
+*/
 public:
     int bestRotation(vector<int>& nums) {
         // 差分数组
         int n = nums.size();
-        vector<int> move(n, 0);
+        vector<int> move(n, 0); // 记录的是移动每个位置 对计分的变化情况
+        // move 是差分数组
+
 
         for (int i=0; i<n; i++) {
             // 分析两种情况
