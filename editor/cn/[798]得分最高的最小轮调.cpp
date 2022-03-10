@@ -86,13 +86,26 @@ class Solution {
 
         01234567
         XXXX2XXX
+        00111111
 
         nums[i] - 1 : 位置开始0
         也就是移动几步 (i - (nums[i] - 1)) ，开始0
 
-        0步
-        i-(nums[i]-1) 步
-        i+1 步
+        0步 diff[0] += 1;
+        i-(nums[i]-1) 步 diff[i-(nums[i]-1)] --;
+        i+1 步 dif[i+1]++;
+
+        =====
+
+        01234567
+        XX4XXXXX
+        00001111
+        nums[i] > i
+
+        0步 diff[0] -= 0;
+        i+1 diff[i+1] ++;
+        i+1+N-nums[i] diff[i+1+N-nums[i]]--;
+
 
 
 
@@ -103,8 +116,11 @@ public:
         int n = nums.size();
         vector<int> move(n, 0); // 记录的是移动每个位置 对计分的变化情况
         // move 是差分数组
+        //
+        //
 
 
+        // 构造出一个等差数组
         for (int i=0; i<n; i++) {
             // 分析两种情况
             if (nums[i] <= i) {
@@ -114,6 +130,7 @@ public:
                 move[(i+1)%n]++; // 直到移动到坐标小于0的位置； 变成移动到最右边； 贡献产生
             } else {
                 // 一开始所在位置不可得分；左移是没有用的；只有移动到边界时，才会产生变化
+                move[0] -= 0;
                 move[(i+1)%n]++;
                 // 继续左移动；则会再次到达 值和下标相同的临界点； 继续左移一位则得分取消
                 move[(n - (nums[i] - i)+1)%n]--;
@@ -121,7 +138,17 @@ public:
         }
 
         int score = 0, maxS = 0, best = 0;
+
+
+        // nums: [2,3,1,4, 0]
+        // move: [1,1,0,1,-1]
+        // score:[1,2,2,3, 2]
+        //
+        // 1, 1,0, 1,-1
+        // 分数是一个查分数组
         for (int i=0; i<n; i++) {
+            cout << "i: " << i << "; move[i]: " << move[i] << endl;
+
             score += move[i];
             if (score > maxS) {
                 maxS = score;
