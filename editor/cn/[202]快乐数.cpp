@@ -44,9 +44,36 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+    // 通过一个集合，当发生死循环，则返回false
+    unordered_set<int> memo;
 public:
     bool isHappy(int n) {
+        // 1 return true;
+        if (n==1)
+            return true;
 
+        while (true) {
+            int sum = 0;
+            int x = 0;
+
+            // 每个数累计^2
+            while (n) {
+                x = n % 10;
+                n /= 10;
+                sum += x*x;
+            }
+
+            if (sum == 1) {
+                return true;
+            }
+            if (memo.count(sum)) {
+                return false;
+            }
+
+            memo.insert(sum);
+            n = sum;
+        }
+        return false;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

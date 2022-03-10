@@ -51,7 +51,13 @@
 class Solution {
 public:
     bool isPowerOfThree(int n) {
-
+        if (n == 0)
+            return false;
+        // 简单模拟题
+        while (n % 3 == 0) {
+            n /= 3;
+        }
+        return n==1;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
