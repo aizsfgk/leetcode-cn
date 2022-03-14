@@ -77,9 +77,22 @@ public:
 */
 
 class Solution {
+private:
+    unordered_map<Node*, Node*> cached;
 public:
     Node* copyRandomList(Node* head) {
-        
+        if (head == nullptr)
+            return nullptr;
+
+        // 递归方法真的很强大啊
+        if (!cached.count(head)) {
+            Node *newHead = new Node(head->val);
+
+            cached[head] = newHead;
+            newHead->next = copyRandomList(head->next);
+            newHead->random = copyRandomList(head->random);
+        }
+        return cached[head];
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

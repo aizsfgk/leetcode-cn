@@ -37,7 +37,26 @@
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
+        // 整数范围
+        int cnt[32] = {0};
 
+        // 记录下所有数值的每一位共出现了多少次 1
+        for (int x : nums) {
+            for (int i=0; i<32; i++) {
+                if (((x >>i ) & 1) == 1) {
+                    cnt[i]++;
+                }
+            }
+        }
+
+        int ans = 0;
+        // 再对 cnt[] 数组的每一位进行 mod 3 操作，重新拼凑出只出现一次的数值
+        for (int i=0; i<32; i++) {
+            if (((cnt[i] % 3) & 1) == 1) {
+                ans += (1 << i);
+            }
+        }
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
