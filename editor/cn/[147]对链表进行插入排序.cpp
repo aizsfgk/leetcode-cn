@@ -61,7 +61,34 @@
 class Solution {
 public:
     ListNode* insertionSortList(ListNode* head) {
-        // 插入排序???
+        if (!head) {
+            return nullptr;
+        }
+
+        ListNode *dummy = new ListNode(-1);
+        dummy->next = head;
+        ListNode *lastSorted = head;
+        ListNode *cur = head->next;
+
+        // 如果存在当前节点
+        while ( cur != nullptr) {
+            if (lastSorted->val <= cur->val) {
+                lastSorted = lastSorted->next;
+            } else { // 需要移动操作
+                ListNode *prev = dummy;
+                while (prev->next->val <= cur->val) {
+                    prev = prev->next;
+                }
+                lastSorted->next = cur->next;
+                cur->next = prev->next;
+                prev->next = cur;
+
+            }
+
+            cur = lastSorted->next;
+        }
+
+        return dummy->next;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

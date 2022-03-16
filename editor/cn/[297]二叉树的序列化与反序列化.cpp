@@ -64,12 +64,90 @@ public:
 
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
-        
+        // 层序遍历；空指针改成#
+        if (root == nullptr) {
+            return "#,";
+        }
+
+        string ans;
+        queue<TreeNode*> que;
+        que.push(root);
+        while (!que.empty()) {
+            auto ele = que.front(); que.pop();
+            if (ele == nullptr) {
+                ans += "#,"; // 先导放入
+            } else {
+                ans += to_string(ele->val) + ",";
+                que.push(ele->left);
+                que.push(ele->right);
+            }
+        }
+
+        // while (!que.empty()) { /// 这种方式是错误的
+        //     int n = que.size();
+        //     for (int i=0;i<n; i++) {
+        //         auto ele = que.front(); que.pop();
+        //         ans.push_back(ele->val + '0');
+        //         if (ele->left) {
+        //             que.push(ele->left);
+        //         } else {
+        //             ans.push_back('#');
+        //         }
+        //         if (ele->right) {
+        //             que.push(ele->right);
+        //         } else {
+        //             ans.push_back('#');
+        //         }
+        //     }
+        // }
+
+        return ans;
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-        
+        vector<string> dataVec = str2arr(data);
+        if (dataVec.size() == 1 && dataVec[0] == "#") {
+            return nullptr;
+        }
+        TreeNode *root = new TreeNode(stoi(dataVec[0]));
+        queue<TreeNode *> que;
+        que.push(root);
+        int cursor = 1;
+
+
+        while (cursor < dataVec.size() && !que.empty()) {
+            TreeNode *node = que.front(); que.pop();
+
+            string leftVal = dataVec[cursor];
+            string rightVal = dataVec[cursor+1];
+
+            if (leftVal != "#" && node != nullptr) {
+                node->left = new TreeNode(stoi(leftVal));
+                que.push(node->left);
+            }
+
+            if (rightVal != "#" && node != nullptr) {
+                node->right = new TreeNode(stoi(rightVal));
+                que.push(node->right);
+            }
+            cursor += 2;
+        }
+        return root;
+    }
+
+    vector<string> str2arr(const string &s) {
+        vector<string> ans;
+
+        int startIdx = 0;
+        for (int i=1; i<s.size(); i++) {
+            if (s[i] == ',') {
+                string substr = s.substr(startIdx, i-startIdx);
+                ans.push_back(substr);
+                startIdx = i+1;
+            }
+        }
+        return ans;
     }
 };
 
