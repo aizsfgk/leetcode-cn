@@ -40,11 +40,61 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    unordered_set<string> memo;
+    int n;
+    int maxLen;
+    int len;
+    string ori_s;
 public:
     vector<string> removeInvalidParentheses(string s) {
         /*
         思路：
         */
+        ori_s = s;
+        n = s.size();
+        int l = 0, r = 0;
+        for (char c : s) {
+            if (c == '(') l++;
+            else if (c == ')') r++;
+        }
+
+        len = 0;
+        maxLen = min(l, r);
+        dfs(0, "", 0);
+
+        vector<string> ans;
+        for (auto it=memo.begin(); it != memo.end(); it++) {
+            ans.push_back(*it);
+        }
+        return ans;
+    }
+
+    void dfs(int idx, string cur, int score) {
+        if (score < 0 || score > maxLen ) return; // 是否有效转换为数字
+
+        if (idx == n) {
+            if (score == 0 && cur.size() >= len) {
+                if (cur.size() > len)
+                    memo.clear();
+                len = cur.size();
+                memo.insert(cur);
+            }
+            return;
+        }
+
+        char c = ori_s[idx];
+        string tmp(1, c);
+        string newStr = cur + tmp;
+        if (c == '(') {
+            dfs(idx+1, newStr, score+1);
+            dfs(idx+1, cur, score);
+        } else if (c == ')') {
+            dfs(idx+1, newStr, score-1);
+            dfs(idx+1, cur, score);
+        } else {
+            dfs(idx+1, newStr, score);
+        }
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

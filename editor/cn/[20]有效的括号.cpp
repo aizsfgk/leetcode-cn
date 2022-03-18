@@ -89,7 +89,7 @@ public:
             }
         }
 
-        return stk.empty();
+        return stk.empty(); // 是否为空
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
