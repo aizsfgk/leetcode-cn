@@ -51,21 +51,35 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class RandomizedSet {
+private:
+    unordered_set<int> ss;
 public:
     RandomizedSet() {
 
     }
     
     bool insert(int val) {
+        if (ss.find(val) != ss.end()) {
+            return false;
+        }
 
+        ss.insert(val);
+        return true;
     }
     
     bool remove(int val) {
+        if (ss.find(val) == ss.end()) {
+            return false;
+        }
 
+        ss.erase(val);
+        return true;
     }
     
     int getRandom() {
-
+        unordered_set<int>::const_iterator it(ss.begin());
+        advance(it, rand() % ss.size());
+        return *it;
     }
 };
 

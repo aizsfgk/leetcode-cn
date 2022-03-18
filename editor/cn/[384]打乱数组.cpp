@@ -43,17 +43,27 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    vector<int> ori;
+    vector<int> arr;
 public:
     Solution(vector<int>& nums) {
-
+        ori = nums;
+        arr.assign(nums.begin(), nums.end());
     }
     
     vector<int> reset() {
-
+        arr.assign(ori.begin(), ori.end());
+        return arr;
     }
     
     vector<int> shuffle() {
-
+        int target = 0;
+        for (int i=0; i<arr.size(); i++) {
+            target = i + rand() % (arr.size()-i); // 核心代码
+            swap(arr[i], arr[target]);
+        }
+        return arr;
     }
 };
 

@@ -72,7 +72,42 @@
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
+        if (tokens.size() == 0) {
+            return 0;
+        }
+        if (tokens.size() == 1) {
+            return stoi(tokens[0]);
+        }
 
+        stack<string> stk;
+
+        int sum = 0;
+        for (int i=0; i<tokens.size(); i++) {
+            if (tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "*" || tokens[i] == "/") {
+                int first = stoi(stk.top()); stk.pop();
+                int second = stoi(stk.top()); stk.pop();
+
+                if (tokens[i] == "+") {
+                    sum = first + second;
+                } else if (tokens[i] == "-") {
+                    sum = second - first;
+                } else if (tokens[i] == "*") {
+                    sum = first * second;
+                } else {
+                    sum = second / first;
+                }
+
+//                cout << "sum: " << sum << endl;
+
+                stk.push(to_string(sum));
+            } else {
+                stk.push(tokens[i]);
+            }
+        }
+
+
+
+        return sum;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

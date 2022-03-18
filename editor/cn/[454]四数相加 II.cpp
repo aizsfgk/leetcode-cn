@@ -45,9 +45,40 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    unordered_map<int,int> search;
 public:
     int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
+        //
+        // 符合这样的条件有几个元组
+        //
+        //
+        //
 
+        int n = nums1.size();
+        int sum = 0;
+        int ans = 0;
+
+        for (auto &n1 : nums1) {
+            for (auto &n2 : nums2) {
+                sum = n1 + n2;
+                if (search.count(sum) > 0) {
+                    search[sum]++;
+                } else {
+                    search[sum] = 1;
+                }
+            }
+        }
+
+        for (auto &n3 : nums3) {
+            for (auto &n4 : nums4) {
+                sum = n3 + n4;
+                if (search.find(-sum) != search.end()) {
+                    ans += search[-sum];
+                }
+            }
+        }
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
