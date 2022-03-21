@@ -48,21 +48,46 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Trie {
+private:
+    bool isEnd;      // 该结点是否是一个串的结束
+    Trie* next[26];  // 字母映射表
 public:
     Trie() {
-
+        isEnd = false;
+        memset(next, 0, sizeof(next)); // 分配内存
     }
     
     void insert(string word) {
+        Trie *node = this;
+        for (char c : word) {
+            if (node->next[c-'a'] == nullptr) {
+                node->next[c-'a'] = new Trie();
+            }
+            node = node->next[c-'a'];
+        }
 
+        node->isEnd = true; // 表面是最后一个串结束
     }
     
     bool search(string word) {
+        Trie *node = this;
+        for (char c : word) {
+            node = node->next[c-'a'];
+            if (node == nullptr)
+                return false;
+        }
 
+        return node->isEnd;
     }
     
     bool startsWith(string prefix) {
-
+        Trie *node = this;
+        for (char c : prefix) {
+            node = node->next[c-'a'];
+            if (node == nullptr)
+                return false;
+        }
+        return true;
     }
 };
 

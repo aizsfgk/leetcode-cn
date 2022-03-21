@@ -54,7 +54,38 @@
 class Solution {
 public:
     string decodeString(string s) {
+        string res;
+        int num = 0;
+        int n = s.size();
+        stack<int> nums;
+        stack<string> sStk;
 
+        for (int i=0; i<n; i++) {
+            if (s[i] >= '0' && s[i] <= '9') {
+                num = num * 10 + s[i] - '0';
+            } else if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')) {
+                res = res + s[i];
+            } else if (s[i] == '[') {
+                nums.push(num);
+                num = 0;
+                sStk.push(res);
+                res = "";
+            } else { // 遇到‘]’时，操作与之相配的‘[’之间的字符，使用分配律
+                int times = nums.top(); nums.pop();
+                for (int j=0; j<times; j++) {
+                    sStk.top() += res;
+                }
+
+                /*
+                   之后若还是字母，就会直接加到res之后，因为它们是同一级的运算
+                   若是左括号，res会被压入strs栈，作为上一层的运算
+                */
+                res = sStk.top();
+
+                sStk.pop();
+            }
+        }
+        return res;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
