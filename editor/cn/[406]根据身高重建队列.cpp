@@ -49,7 +49,28 @@
 class Solution {
 public:
     vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+        vector<vector<int>> ans;
 
+        // 排序完成
+        sort(people.begin(), people.end(), [&](const vector<int> &a, const vector<int> &b){
+            if (a[0] != b[0]) {
+                return a[0] > b[0];
+            } else {
+                return a[1] < b[1];
+            }
+        });
+
+        // 输出数组
+        for (auto ele : people) {
+            if (ans.size() <= ele[1]) {
+                ans.push_back(ele);
+            } else {
+                // 插入到合法的位置
+                ans.insert(ans.begin() + ele[1], ele);
+            }
+        }
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

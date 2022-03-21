@@ -67,9 +67,22 @@
  * };
  */
 class Solution {
+private:
+    int sum = 0;
 public:
     TreeNode* convertBST(TreeNode* root) {
+        traversal(root);
+        return root;
+    }
 
+    void traversal(TreeNode *root) {
+        if (root == nullptr)
+            return;
+
+        traversal(root->right);
+        root->val += sum;
+        sum = root->val;
+        traversal(root->left);
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

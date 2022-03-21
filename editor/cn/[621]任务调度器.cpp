@@ -55,7 +55,32 @@
 class Solution {
 public:
     int leastInterval(vector<char>& tasks, int n) {
+        //
+        // 桶思想
+        // 解题链接：https://leetcode-cn.com/problems/task-scheduler/solution/tong-zi-by-popopop/
+        //
+        int size = tasks.size();
 
+        // 构造桶
+        vector<int> box(26);
+        for (char c : tasks) {
+            box[c-'A']++;
+        }
+
+        // 元素个数排序
+        sort(box.begin(), box.end(), [](int &x, int &y){
+            return x > y;
+        });
+
+
+        int cnt = 1;
+        while (cnt < box.size() && box[cnt] == box[0])
+            cnt++; // 求出最后一个桶的元素个数
+
+        // (n+1) 为一个时间单位
+        // (n+1) * (box[0] - 1) 前几个
+        // 最后一个桶的元素个数cnt
+        return max(size, (n+1)*(box[0]-1) + cnt);
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
