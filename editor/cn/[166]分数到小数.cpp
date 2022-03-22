@@ -59,7 +59,39 @@
 class Solution {
 public:
     string fractionToDecimal(int numerator, int denominator) {
+        // 转 long 计算，防止溢出
+        long long a = numerator, b = denominator;
+        // 如果本身能够整除，直接返回计算结果
+        if ( a % b == 0) return to_string(a/b);
 
+        string ans;
+        // 如果其一为负数，先追加负号
+        if (a * b < 0) ans.push_back('-');
+
+        a = abs(a); b = abs(b);
+        // 计算小数点前的部分，并将余数赋值给 a
+        ans += to_string(a/b) + ".";
+
+        a %= b;
+
+        unordered_map<long long, int> memo;
+        while (a != 0) {
+            //
+            // 记录当前余数所在答案位置，并继续模拟除法运算
+            //
+
+            memo[a] = ans.size();
+            a *= 10;
+            ans += to_string(a/b);
+            a %= b;
+
+            // 如果当前余数之前出现过，则将 [出现位置 到 当前位置] 的部分抠出来（循环小数部分）
+            if (memo.count(a) > 0) {
+                int u = memo[a];
+                return ans.substr(0, u) + "(" + ans.substr(u) + ")";
+            }
+        }
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

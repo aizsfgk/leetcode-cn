@@ -69,17 +69,32 @@
  */
 
 class NestedIterator {
+private:
+    vector<int> nest;
+    int idx = 0;
+
+    void dfs(vector<NestedInteger> &nestedList) {
+        for (auto nested : nestedList) {
+            if (nested.isInteger()) {
+                nest.push_back(nested.getInteger());
+            } else {
+                dfs(nested.getList());
+            }
+        }
+    }
 public:
     NestedIterator(vector<NestedInteger> &nestedList) {
-        
+        dfs(nestedList);
     }
     
     int next() {
-        
+        int num = nest[idx];
+        idx++;
+        return num;
     }
     
     bool hasNext() {
-        
+        return idx < nest.size();
     }
 };
 
