@@ -100,6 +100,7 @@ public:
                 root = root->left;
             }
 
+            root = stk.top(); stk.pop();
             ans.push_back(root->val);
 
             root = root->right;

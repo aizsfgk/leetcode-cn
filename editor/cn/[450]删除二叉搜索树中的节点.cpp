@@ -72,7 +72,40 @@
 class Solution {
 public:
     TreeNode* deleteNode(TreeNode* root, int key) {
+        // 二叉搜索树的节点删除，和调整使其仍然是一棵合法的二叉搜索树
 
+        /*
+        https://leetcode-cn.com/problems/delete-node-in-a-bst/solution/miao-dong-jiu-wan-shi-liao-by-terry2020-tc0o/
+        根据二叉搜索树的性质
+
+        如果目标节点大于当前节点值，则去右子树中删除；
+        如果目标节点小于当前节点值，则去左子树中删除；
+        如果目标节点就是当前节点，分为以下三种情况：
+            其无左子：其右子顶替其位置，删除了该节点；
+            其无右子：其左子顶替其位置，删除了该节点；
+            其左右子节点都有：其左子树转移到其右子树的最左节点的左子树上，然后右子树顶替其位置，由此删除了该节点。
+        */
+
+        if (root == nullptr)
+            return root;
+        if (key > root->val) {
+            root->right = deleteNode(root->right, key); // 去右子树删除
+        } else if (key < root->val) {
+            root->left = deleteNode(root->left, key); // 去左子树删除
+        } else { // 当前节点
+            if (!root->left) return root->right; // 情况1
+            if (!root->right) return root->left; // 情况2
+
+            TreeNode *node = root->right;  // 情况3
+            while (node->left) { // 寻找欲删除节点右子树的最左节点
+                node = node->left;
+            }
+            node->left = root->left; // 将欲删除节点的左子树成为其右子树的最左节点的左子树
+            root = root->right; // 欲删除节点的右子顶替其位置，节点被删除
+
+        }
+
+        return root;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

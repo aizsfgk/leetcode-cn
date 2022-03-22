@@ -49,9 +49,32 @@
  * };
  */
 class Solution {
+private:
+    int first = INT_MAX;
+    int second = INT_MAX;
+    bool has = false;
 public:
-    int findSecondMinimumValue(TreeNode* root) {
+    void dfs(TreeNode *root) {
+        if (root == nullptr)
+            return;
 
+        int cur = root->val;
+
+        if (cur < first) {
+            second = first;
+            first = cur;
+        } else if ( cur > first && cur <= second) {
+            has = true; // 设置一个标识位
+            second = cur;
+        }
+
+        dfs(root->left);
+        dfs(root->right);
+    }
+
+    int findSecondMinimumValue(TreeNode* root) {
+        dfs(root);
+        return !has ? -1 : second;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
