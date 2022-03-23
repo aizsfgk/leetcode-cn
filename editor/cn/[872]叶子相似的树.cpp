@@ -75,9 +75,16 @@
  * };
  */
 class Solution {
+private:
+    vector<int> ans1;
+    vector<int> ans2;
 public:
     bool leafSimilar(TreeNode* root1, TreeNode* root2) {
 
+    }
+
+    void layerOrder(TreeNode *root) {
+        if (root == nullptr)
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

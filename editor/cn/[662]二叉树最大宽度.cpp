@@ -83,49 +83,38 @@
  */
 class Solution {
 private:
-    struct SData {
-        long long val;
-        TreeNode *root;
-        SData() : val(0), root(nullptr) {}
-        SData(long long x) : val(x), root(nullptr) {}
-        SData(long long x, TreeNode *r) : val(x), root(r) {}
-    };
+    long long maxWidth = 0;
 public:
-    long long ans;
-
     int widthOfBinaryTree(TreeNode* root) {
-        if (root == nullptr) {
+        if (root == nullptr)
             return 0;
-        }
 
-        queue<SData*> q;
-        q.push(new SData(0, root));
+        queue<pair<TreeNode*, long long>> que;
+        que.push({root, 1}); // 一个节点，宽度当然是1
 
-        long long v = 0;
-        long long width = 0;
-        while (!q.empty()) {
-            int size = q.size();
-            width = q.back()->val - q.front()->val + 1;
+        while (!que.empty()) {
+            int size = que.size();
 
-            for (int i=0; i< size; i++) {
-                SData *node = q.front(); q.pop();
+            long long left = que.front().second, right = que.front().second;
 
-                if (node->root->left) {
-                    v = node->val * 2 + 1;
-                    q.push(new SData(v, node->root->left));
+            for (int i=size-1; i>=0; i--) {
+                auto ele = que.front(); que.pop();
+
+                right = ele.second;
+
+                if (ele.first->left) {
+                    que.push({ele.first->left, 2 * (right - left) });
                 }
 
-                if (node->root->right) {
-                    v = node->val * 2 + 2;
-                    q.push(new SData(v, node->root->right));
+                if (ele.first->right) {
+                    que.push({ele.first->right, 2 * (right-left)+1 });
                 }
+
+                maxWidth = max(maxWidth, right-left+1);
             }
-
-            ans = max(ans, width);
-
         }
 
-        return (int)ans;
+        return maxWidth;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

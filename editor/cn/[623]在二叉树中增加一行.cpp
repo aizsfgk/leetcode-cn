@@ -57,10 +57,66 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+class NodeSet {
+public:
+    int dir;
+    TreeNode *parent;
+    TreeNode *node;
+    NodeSet(TreeNode *p, TreeNode *n, int d) : dir(d), parent(p), node(n) {}
+};
+
 class Solution {
 public:
     TreeNode* addOneRow(TreeNode* root, int val, int depth) {
+        if (depth == 1) {
+            TreeNode *newRoot = new TreeNode(val);
+            newRoot->left = root;
+            return newRoot;
+        }
 
+        queue<NodeSet*> que;
+        que.push(new NodeSet(nullptr, root, 0));
+
+        int curDepth = 0;
+        while (!que.empty()) {
+            curDepth++;
+
+            int size = que.size();
+            if (curDepth == depth) {
+                for (int i=0; i<size; i++) {
+                    auto ele = que.front(); que.pop();
+                    if (ele->dir == 1) {
+                        TreeNode *cur = new TreeNode(val);
+                        ele->parent->left = cur;
+                        cur->left = ele->node;
+
+                    } else if (ele->dir == 2) {
+                        TreeNode *cur = new TreeNode(val);
+                        ele->parent->right = cur;
+                        cur->right = ele->node;
+                    }
+                }
+            } else {
+                for (int i=0; i<size; i++) {
+                    auto ele = que.front(); que.pop();
+                    if (ele->node->left) {
+                        que.push(new NodeSet(ele->node, ele->node->left, 1));
+                    }
+
+                    if (ele->node->right) {
+                        que.push(new NodeSet(ele->node, ele->node->right, 2));
+                    }
+
+                    if (depth == curDepth + 1) {
+                        ele->node->left = new TreeNode(val);
+                        ele->node->right = new TreeNode(val);
+                    }
+                }
+            }
+        }
+
+        return root;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

@@ -55,9 +55,25 @@
  * };
  */
 class Solution {
+private:
+    string dfs(TreeNode* root, vector<TreeNode*>&res, unordered_map<string, int>& mp) {
+        if (root == nullptr) return "";
+
+        // 前序遍历
+        string str = to_string(root->val) + "," + dfs(root->left, res, mp) + "," + dfs(root->right, res, mp);
+        if (mp[str] == 1) {
+            res.push_back(root);
+        }
+        mp[str]++;
+        return str;
+    }
 public:
     vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
-
+        // 重复子树
+        vector<TreeNode*> res;
+        unordered_map<string, int> mp;
+        dfs(root, res, mp);
+        return res;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
