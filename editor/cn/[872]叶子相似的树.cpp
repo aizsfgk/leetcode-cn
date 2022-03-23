@@ -80,11 +80,32 @@ private:
     vector<int> ans2;
 public:
     bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+        dfs(root1, ans1);
+        dfs(root2, ans2);
 
+//        for (int i=0; i<ans1.size(); i++) {
+//            cout << ans1[i] << ";";
+//        }
+//        cout << endl;
+//
+//        for (int i=0; i<ans2.size(); i++) {
+//            cout << ans2[i] << ";";
+//        }
+//        cout << endl;
+
+        return ans1 == ans2;
     }
 
-    void layerOrder(TreeNode *root) {
+    void dfs(TreeNode *root, vector<int> &ans) {
         if (root == nullptr)
+            return;
+
+        if (root->left == nullptr && root->right == nullptr) {
+            ans.push_back(root->val);
+        }
+
+        dfs(root->left, ans);
+        dfs(root->right, ans);
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
