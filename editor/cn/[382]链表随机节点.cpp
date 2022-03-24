@@ -61,13 +61,19 @@
  * };
  */
 class Solution {
+private:
+    vector<int> matrix;
 public:
     Solution(ListNode* head) {
-
+        while (head) {
+        matrix.push_back(head->val);
+            head = head->next;
+        }
     }
     
     int getRandom() {
-
+        int idx = (random() + matrix.size()) % matrix.size();
+        return matrix[idx];
     }
 };
 
