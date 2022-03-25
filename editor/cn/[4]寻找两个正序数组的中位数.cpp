@@ -60,8 +60,34 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
+    // time complexity: O(m+n)
+    // space complexity: O(1)
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int m = nums1.size();
+        int n = nums2.size();
+        int sum = m + n;
 
+        int left = 0, right = 0;
+        int idx1 = 0, idx2 = 0;
+
+        for (int i=0; i <= sum / 2; i++) { //
+            left = right;
+            if (idx1 < m && (idx2 >= n || nums1[idx1] < nums2[idx2])) {
+                right = nums1[idx1++];
+            } else {
+                right = nums2[idx2++];
+            }
+        }
+
+        if (sum % 2 == 0) {
+            return (double)((left+right) / 2.0); // 除数必须是 double;
+        } else {
+            return (double)right;
+        }
+    }
+
+    // test
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
