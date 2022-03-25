@@ -60,6 +60,7 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
+    /*
     // time complexity: O(m+n)
     // space complexity: O(1)
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
@@ -85,9 +86,51 @@ public:
             return (double)right;
         }
     }
+    */
 
-    // test
+    // time complexity: O(log(m+n))
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        //
+        int m = nums1.size();
+        int n = nums2.size();
+
+        int left = (n + m + 1) / 2;  // 第一个数
+        int right = (n + m + 2) / 2; // 第二个数
+
+        return (getKNum(nums1, 0, m-1, nums2, 0, n-1, left)
+                    +getKNum(nums1, 0, m-1, nums2, 0, n-1, right)) * 0.5; // 左右相加 * 0.5； 奇数计算2遍
+
+    }
+
+    // 带数，是把问题解决的好方法
+    int getKNum(const vector<int>& nums1, int start1, int end1,
+        const vector<int>& nums2, int start2, int end2, int k) {
+        // 尾递归
+
+        // 求长度
+        int len1 = end1 - start1 + 1;
+        int len2 = end2 - start2 + 1;
+
+        // 总是让 nums1 为小
+        if (len1 > len2) {
+            return getKNum(nums2, start2, end2, nums1, start1, end1, k);
+        }
+
+        // 长度为0; 直接返回 nums2的区间内的值
+        if (len1 == 0) return nums2[start2+k-1];
+
+        if (k == 1) return min(nums2[start2], nums1[start1]); // 找到答案，返回其中一个小值
+
+        int i = start1 + min(len1, k/2) - 1;
+        int j = start2 + min(len2, k/2) - 1;
+
+        if (nums1[i] > nums2[j]) {
+            // 而k则变为k - (j - start2 + 1)，即减去逻辑上排出的元素的个数
+            // (要加1，因为索引相减，相对于实际排除的时要少一个的)而k则变为k - (j - start2 + 1)，即减去逻辑上排出的元素的个数(要加1，因为索引相减，相对于实际排除的时要少一个的)
+            return getKNum(nums1, start1, end1, nums2, j+1, end2, k - (j-start2+1));
+        } else {
+            return getKNum(nums1, i+1, end1, nums2, start2, end2, k - (i-start1+1));
+        }
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

@@ -28,15 +28,16 @@
 class Solution {
 public:
     int reverse(int x) {
-        long res = 0;
+        // 因为只是 32 位环境；所以不能使用 long
+        int rev = 0;
         while (x) {
-            res = res * 10 + x % 10;
+            if (rev < INT_MIN / 10 || rev > INT_MAX / 10)
+                return 0;
+
+            rev = rev * 10 + x % 10;
             x /= 10;
         }
-        if ( res > INT_MAX || res < INT_MIN) {
-            return 0;
-        }
-        return (int)res;
+        return rev;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

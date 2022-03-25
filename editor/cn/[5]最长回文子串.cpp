@@ -48,7 +48,7 @@ class Solution {
 public:
     // 最长回文子串
     // 最长回文子串，使用动态规划
-    // dp[i][j] = 以索引 i - j 的子串的最长回文串长度是dp[i][j]
+    // dp[i][j] = 以索引 i - j 的子串是否是 回文串；1 是；0 否
     string longestPalindrome(string s) {
         int n = s.size();
         if (n < 2) {
