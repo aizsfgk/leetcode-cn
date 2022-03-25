@@ -51,6 +51,7 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
+    // 双指针
     int maxArea(vector<int>& height) {
         // 给一个高度数组
         // S(i, j) = min(height[i], height[j]) * (j-i)
