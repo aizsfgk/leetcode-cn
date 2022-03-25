@@ -30,23 +30,16 @@
 class Solution {
 public:
     bool isPalindrome(int x) {
-        if (x < 0)
+        if (x < 0 || (x % 10 == 0 && x != 0)) // 特殊条件处理
             return false;
 
-        int reverse_num = reverseNum(x);
-        return reverse_num == x ? true : false;
-    }
-
-    int reverseNum(int x) {
-        long res = 0;
-        while (x) {
-           res = res * 10 + x % 10;
-           x /= 10;
+        int revNum = 0;
+        while (x > revNum) { // 只需要反转一半就可以了
+            revNum = revNum * 10 + x % 10;
+            x /= 10;
         }
 
-        if (res > INT_MAX|| res < INT_MIN)
-           return 0;
-        return (int)res;
+        return x == revNum || x == revNum/10; // 奇数 || 偶数
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

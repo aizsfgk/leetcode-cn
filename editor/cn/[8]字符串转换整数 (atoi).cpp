@@ -85,7 +85,48 @@
 class Solution {
 public:
     int myAtoi(string s) {
+        int idx = 0;
+        int neg = false;
+        int ans = 0;
 
+        // 剔除前缀空格
+        while (s[idx] == ' ') {
+            idx++;
+        }
+
+        for (int i=idx; i<s.size(); i++) {
+
+            if (i == idx && s[i] == '-') {
+                neg = true;
+                continue;
+            }
+
+            if (i == idx && s[i] == '+') {
+                continue;
+            }
+
+            if (s[i] < '0' || s[i] > '9') {
+                break;
+            }
+
+            int pos = s[i] - '0';
+
+            // 去除异常情况
+            if (neg) {
+                //
+                if (-ans < INT_MIN/10 || -ans == INT_MIN/10 && pos >= 8) {
+                    return INT_MIN;
+                }
+            } else {
+                if (ans > INT_MAX/10 || ans == INT_MAX/10 && pos >= 7) {
+                    return INT_MAX;
+                }
+            }
+
+            ans = ans * 10 + pos;
+        }
+
+        return neg ? -ans : ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
