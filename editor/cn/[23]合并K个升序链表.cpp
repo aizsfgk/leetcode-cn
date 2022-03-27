@@ -59,61 +59,29 @@
  */
 class Solution {
 public:
-    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-        if (l1 == nullptr && l2 == nullptr) {
-            return nullptr;
-        }
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        auto cmp = [](const ListNode* list1, const ListNode* list2) {
+            return list1->val > list2->val;
+        };
+        priority_queue<ListNode*, vector<ListNode*>, decltype(cmp)> que {cmp};
 
-        if (!l1) {
-            return l2;
-        }
-
-        if (!l2) {
-            return l1;
-        }
-
-        ListNode dummy;
-        ListNode *cur = &dummy;
-
-        while(l1 && l2) {
-            if (l1->val < l2->val) {
-                cur->next = new ListNode(l1->val);
-                l1 = l1->next;
-            } else {
-                cur->next = new ListNode(l2->val);
-                l2 = l2->next;
+        for (auto list : lists) {
+            if (list) {
+                que.push(list);
             }
+
+        }
+
+        ListNode head(-1), *cur = &head;
+        while (!que.empty()) {
+            ListNode* ele = que.top(); que.pop();
+            if (ele->next) {
+                que.push(ele->next);
+            }
+            cur->next = ele;
             cur = cur->next;
         }
-
-        if (l1) {
-            cur->next = l1;
-        }
-
-        if (l2) {
-            cur->next = l2;
-        }
-
-        return dummy.next;
-    }
-
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        int size = lists.size();
-        if (size == 0) {
-            return nullptr;
-        }
-
-        if (size == 1) {
-            return lists[0];
-        }
-
-        ListNode *dummy = lists[0];
-
-        for (int i=1; i<size; i++) {
-            dummy = mergeTwoLists(dummy, lists[i]);
-        }
-
-        return dummy;
+        return head.next;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
