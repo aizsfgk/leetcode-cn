@@ -91,7 +91,8 @@ public:
     }
     */
 
-    int search(vector<int>& nums, int target) {
+    // 二分查找
+    int search(vector<int>& nums, int target) { ，
         int left = 0, right = nums.size() - 1, mid = 0;
         while (left <= right) {
             mid = left + (right - left)/2;

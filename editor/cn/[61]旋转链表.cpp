@@ -43,50 +43,37 @@
 class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
-        if (head == nullptr || k == 0) {
-            return head;
-        }
-        int n = 0;
-        ListNode *tmp = head;
-
-        while (tmp) {
-            n++;
-            tmp = tmp->next;
-        }
-
-        if (n == 1 || k % n == 0) {
+        /*
+            1. 非法状态剔除
+            2. 找到最后一个节点，并计算节点个数
+            3. 最后节点链接到头节点
+            4. 再前进步数
+            5. 当前节点之后节点为新的头节点；当前节点之后设为nullptr
+            6. 返回 newHead;
+        */
+        if (!head || !head->next) {
             return head;
         }
 
-        if (k > n) {
-            k = k % n;
+        int num = 1;
+        ListNode *prev = head;
+        while (prev->next) {
+            prev = prev->next;
+            num++;
         }
 
-        // 开始双指针移动
-        ListNode *one, *one_pre, *two, *two_pre;
-        one = head;
-        two = head;
+        prev->next = head;
 
-        while (k > 0) {
-            one_pre = one;
-            one = one->next;
-            k--;
+        int n = num - k % num;
+        ListNode *cur = prev;
+        while (n) {
+            cur = cur->next;
+            n--;
         }
 
-        while (one) {
-            one_pre = one;
-            one = one->next;
-
-            two_pre = two;
-            two = two->next;
-        }
-
-        ListNode *newHead = two_pre->next;
-        two_pre->next = nullptr;
-        one_pre->next = head;
-
+        ListNode *newHead = cur->next;
+        cur->next = nullptr;
         return newHead;
-
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
