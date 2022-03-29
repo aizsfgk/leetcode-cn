@@ -31,21 +31,13 @@
  * };
  */
 class Solution {
-private:
-    int max(int a, int b) {
-        if (a >= b) {
-            return a;
-        } else {
-            return b;
-        }
-    }
 public:
     int maxDepth(TreeNode* root) {
-        if (root == nullptr) { /// 需要保留的
+        // 后续遍历
+        if (root == nullptr)
             return 0;
-        }  else {
-            return 1 + max(maxDepth(root->left), maxDepth(root->right)); /// 需要保留的
-        }
+
+        return 1 + max(maxDepth(root->left), maxDepth(root->right));
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
