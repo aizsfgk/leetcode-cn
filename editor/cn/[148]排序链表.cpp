@@ -56,7 +56,39 @@
 class Solution {
 public:
     ListNode* sortList(ListNode* head) {
+        if (head == nullptr || head->next == nullptr)
+            return head;
 
+        ListNode *slow = head, *fast = head;
+
+        ListNode *brk;
+        while (fast && fast->next) {
+            fast = fast->next->next;
+            if (!fast || !fast->next)
+                brk = slow;
+            slow = slow->next;
+        }
+
+        brk->next = nullptr; // 断开
+
+        ListNode *head1 = sortList(head);
+        ListNode *head2 = sortList(slow);
+
+        ListNode dummy(-1), *cur = &dummy;
+
+        // 只要有一个节点
+        while (head1 || head2) {
+            if (!head1 || (head1 && head2 && head2->val <= head1->val)) {
+                cur->next = head2;
+                head2 = head2->next;
+                cur = cur->next;
+            } else {
+                cur->next = head1;
+                head1 = head1->next;
+                cur = cur->next;
+            }
+        }
+        return dummy.next;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
