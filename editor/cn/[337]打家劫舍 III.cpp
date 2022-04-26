@@ -47,6 +47,7 @@
  */
 class Solution {
 public:
+    /*
     int rob(TreeNode* root) {
         // 为何有种层序遍历的感觉??? 不是
         //
@@ -78,6 +79,30 @@ public:
         int val2 = max(left[0], left[1]) + max(right[0], right[1]);
 
         return {val2, val1};
+    }
+    */
+
+    int rob(TreeNode* root) {
+        vector<int> rs = robTree(root);
+        return max(rs[0], rs[1]);
+    }
+
+    vector<int> robTree(TreeNode *root) {
+        if (!root) {
+            return {0,0};
+        }
+
+        vector<int> left = robTree(root->left);
+        vector<int> right = robTree(root->right);
+
+        // 后续遍历
+
+        // 0 : 不偷
+        // 1 : 偷
+        int idx0 = max(left[0], left[1]) + max(right[0], right[1]);
+        int idx1 = root->val + left[0] + right[0];
+
+        return {idx0, idx1};
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

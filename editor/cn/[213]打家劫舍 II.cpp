@@ -43,6 +43,7 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
+/*
     int rob(vector<int>& nums) {
         // 思路： 1. 首尾都不偷
         //       2. 偷首1，不偷尾1
@@ -80,6 +81,29 @@ public:
             dp[i] = max(dp[i-1], dp[i-2] + nums[i]);
         }
         return dp[end];
+    }
+
+*/
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 0)
+            return 0;
+        if (n == 1)
+            return nums[0];
+
+        return max(myRob(nums, 0, n-2), myRob(nums, 1, n-1));
+    }
+
+    int myRob(const vector<int>& nums, int start, int end) {
+
+        int prev = 0,cur = 0,tmp;
+        for (int i=start; i<=end; i++) {
+            tmp = cur;
+            cur = max(prev + nums[i], cur);
+            prev = tmp;
+        }
+        return cur;
+
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
