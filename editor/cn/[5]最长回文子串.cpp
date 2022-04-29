@@ -58,10 +58,6 @@ public:
         // dp table
         vector<vector<int>> dp(n, vector<int>(n, 0));
 
-        // base case
-        for (int i=0; i<n; i++) {
-            dp[i][i] = 1;
-        }
 
         int start = 0, max = 1;
         // 状态转换方程
@@ -70,23 +66,27 @@ public:
         //            else 0; len >= 2 }
         // for loop
         // 遍历所有子串; 遍历所有子串的一个模板
-        for (int j=1; j<n; j++) {
-            for (int i=0; i<j; i++) {
-
-                // 左右边界字符相等
-                if (s[i] == s[j]) {
-                    // (j-1) - (i+1) + 1 < 2 ==> j-i < 3
-                    if (j-i < 3) { // 保证base case 满足
-                        dp[i][j] = 1;
-                    } else {
-                        dp[i][j] = dp[i+1][j-1];
+        for (int j=0; j<n; j++) {
+            for (int i=0; i<=j; i++) {
+                if (i == j) {
+                    dp[i][j] = 1;
+                } else {
+                     // 左右边界字符相等
+                    if (s[i] == s[j]) {
+                        // (j-1) - (i+1) + 1 < 2 ==> j-i < 3
+                        if (j-i < 3) { // 保证base case 满足
+                            dp[i][j] = 1;
+                        } else {
+                            dp[i][j] = dp[i+1][j-1];
+                        }
                     }
-                }
 
-                // 求结果
-                if (dp[i][j] == 1 && j-i+1 > max) {
-                    start = i;
-                    max = j-i+1;
+
+                    // 求结果
+                    if (dp[i][j] == 1 && j-i+1 > max) {
+                        start = i;
+                        max = j-i+1;
+                    }
                 }
             }
         }
