@@ -32,7 +32,7 @@ public:
         ListNode dummy(-1), *cur = &dummy;
         cur->next = head;
         ListNode *first = cur;
-        
+
         while (k > 0) {
             cur = cur->next;
             k--;

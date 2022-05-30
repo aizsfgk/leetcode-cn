@@ -46,9 +46,80 @@
  * };
  */
 class Solution {
+private:
+    // 判断两个数是否相同
+    // leetcode 的 572 判断不太一样；因为 (约定空树不是任意一个树的子结构)
+    // 需要注意
+    bool dfs(TreeNode *A, TreeNode *B) {
+        if (B == nullptr) // B为空了，所以结束了
+            return true;
+        if (A == nullptr || A->val != B->val) // 不是子树
+            return false;
+
+        return dfs(A->left, B->left) && dfs(A->right, B->right); // 依次寻找
+    }
+
+
 public:
     bool isSubStructure(TreeNode* A, TreeNode* B) {
-
+        // (约定空树不是任意一个树的子结构)
+        // 所以 A != nullptr && B != nullptr
+        return (A != nullptr && B != nullptr) && ( dfs(A, B)|| isSubStructure(A->left, B) || isSubStructure(A->right, B) ) ;
     }
 };
+//class Solution {
+//
+//private:
+//    // 检测两颗树是否完全相同
+//    bool isSameTree(TreeNode* p, TreeNode* q) {
+//         // 深度优先
+//        if (p == nullptr && q == nullptr) {
+//            return true;
+//        } else if (p == nullptr || q == nullptr) {
+//            return false;
+//        } else if ( p->val != q->val) {
+//            return false;
+//        } else {
+//            return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+//        }
+//
+//    }
+//public:
+//    bool isSubStructure(TreeNode* root, TreeNode* subRoot) {
+//
+//        if (root == nullptr && subRoot == nullptr) {
+//            return true;
+//        }
+//
+//        if (subRoot == nullptr) {
+//            return true;
+//        }
+//
+//        stack<TreeNode *> s;
+//        s.push(root);
+//
+//        TreeNode *node = nullptr;
+//        bool ret = false;
+//
+//        while (!s.empty()) {
+//
+//            node = s.top(); s.pop();
+//
+//            ret = isSameTree(node, subRoot);
+//            if (ret) {
+//                return true;
+//            }
+//
+//            if (node->right) {
+//                s.push(node->right);
+//            }
+//
+//            if (node->left) {
+//                s.push(node->left);
+//            }
+//        }
+//
+//        return false;
+//    }
+//};
 //leetcode submit region end(Prohibit modification and deletion)
