@@ -32,7 +32,21 @@
 class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        //
+        // 顺时针打印
+        //
 
+        vector<int> ans;
+
+        int m = matrix.size();
+        int n = matrix[0].size();
+        if (m == 0) return ans;
+
+        while (true) {
+
+        }
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
