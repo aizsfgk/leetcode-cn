@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 
 //请完成一个函数，输入一个二叉树，该函数输出它的镜像。
+=======
+//请完成一个函数，输入一个二叉树，该函数输出它的镜像。 
+>>>>>>> d19ee2ea040727c98624c90ba43bf6fa30591a24
 //
 // 例如输入： 
 //
@@ -47,6 +51,7 @@
  */
 class Solution {
 public:
+<<<<<<< HEAD
     void myMirrorTree(TreeNode* root) {
          //
         if (root == nullptr)
@@ -63,6 +68,10 @@ public:
     TreeNode* mirrorTree(TreeNode* root) {
         myMirrorTree(root);
         return root;
+=======
+    TreeNode* mirrorTree(TreeNode* root) {
+
+>>>>>>> d19ee2ea040727c98624c90ba43bf6fa30591a24
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
