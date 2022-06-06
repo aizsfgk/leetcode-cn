@@ -51,10 +51,9 @@
  */
 class Solution {
 public:
-<<<<<<< HEAD
     /*
     对称二叉树定义： 对于树中 任意两个对称节点 LL 和 RR ，一定有：
-        L.val = R.valL.val=R.val ：即此两对称节点值相等。
+        L.val = R.val && L.val=R.val ：即此两对称节点值相等。
         L.left.val = R.right.valL.left.val=R.right.val ：即 LL 的 左子节点 和 RR 的 右子节点 对称；
         L.right.val = R.left.valL.right.val=R.left.val ：即 LL 的 右子节点 和 RR 的 左子节点 对称。
     */
@@ -116,10 +115,5 @@ public:
          return true;
      }
 */
-=======
-    bool isSymmetric(TreeNode* root) {
-
-    }
->>>>>>> d19ee2ea040727c98624c90ba43bf6fa30591a24
 };
 //leetcode submit region end(Prohibit modification and deletion)

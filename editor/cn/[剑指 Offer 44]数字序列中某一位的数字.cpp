@@ -33,7 +33,22 @@
 class Solution {
 public:
     int findNthDigit(int n) {
+        int base = 1;
+        int weight = 9;
 
+        while (n > (long)base * weight) {
+            n -= base * weight;
+            base += 1;
+            weight *= 10;
+        }
+
+        int index = n - 1; // 索引从0开始
+        int start = pow(10, base - 1);
+        int num = start + index / base;
+        int bit = index % base;
+
+        int digit = (num / (int)pow(10, base - 1 - bit)) % 10;
+        return digit;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
