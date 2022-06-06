@@ -46,14 +46,35 @@
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
-        int ans = INT_MIN;
-        int pre = 0;
-        for (int i=0; i<nums.size(); i++) {
-            pre = max(pre+nums[i], nums[i]);
-//            cout << "pre: " << pre << endl;
-            ans = max(ans, pre);
-        }
+        /*
+            这里是连续的
+        */
+//        int ans = INT_MIN;
+//        int pre = 0;
+//        for (int i=0; i<nums.size(); i++) {
+//            pre = max(pre+nums[i], nums[i]);
+////            cout << "pre: " << pre << endl;
+//            ans = max(ans, pre);
+//        }
+//
+//        return ans;
 
+        int n = nums.size();
+        if (n == 0) return 0;
+
+        // dp[i] 以 i结尾的数组的最大和
+        vector<int> dp(n, 0);
+        dp[0] = nums[0];
+        int ans = nums[0];
+        for (int i=1; i<n; i++) {
+            dp[i] = max(dp[i-1]+nums[i], nums[i]); // 连续; 思考：如果不连续呢?
+            /*
+                如果不连续，则是：dp[i] = max({dp[i-1}, dp[i-1]+nums[i], nums[i]});
+            */
+            if (dp[i] > ans) {
+                ans = dp[i];
+            }
+        }
         return ans;
     }
 };
