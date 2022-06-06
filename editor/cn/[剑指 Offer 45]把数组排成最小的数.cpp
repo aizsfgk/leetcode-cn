@@ -34,7 +34,21 @@
 class Solution {
 public:
     string minNumber(vector<int>& nums) {
+        vector<string> strNums;
 
+        for (int num : nums) {
+            strNums.push_back(to_string(num));
+        }
+
+        sort(strNums.begin(), strNums.end(), [&](string &a, string &b){
+            return a+b < b+a; // 使用这种拼接方法
+        });
+
+        string ans;
+        for (string str : strNums) {
+            ans += str;
+        }
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

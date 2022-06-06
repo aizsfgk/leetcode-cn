@@ -30,6 +30,11 @@
 class Solution {
 public:
     vector<int> singleNumbers(vector<int>& nums) {
+        /*
+            将代码分成2组
+            怎么分？找到抵押给 和 结果异或为1的bit
+
+        */
         int ret = 0;
         for (int num : nums)
             ret ^= num;
