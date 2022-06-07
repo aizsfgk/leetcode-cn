@@ -25,7 +25,26 @@
 class Solution {
 public:
     vector<int> constructArr(vector<int>& a) {
+        int n = a.size();
+        if (n == 0) return {};
 
+        vector<int> ans(n, 1);
+
+        // 1. 求 i之前的元素 乘积
+        int p = 1;
+        for (int i=0; i<n; i++) {
+            ans[i] *= p;
+            p *= a[i];
+        }
+
+        // 2. 求 i之后元素的乘积
+        p = 1;
+        for (int i=n-1; i>=0; i--) {
+            ans[i] *= p;
+            p *= a[i];
+        }
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
