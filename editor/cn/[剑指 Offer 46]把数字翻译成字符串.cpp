@@ -25,6 +25,21 @@ class Solution {
 public:
     int translateNum(int num) {
         // 如何进行拆分； 有点像是 回溯的拆分字符串
+        string src = to_string(num);
+        int n = src.size();
+
+        // a 是第一个 now；b 是第二个 prev
+//        int a = 1, b = 1;
+
+        int prev = 1, now = 1;
+        for (int i=2; i<=n; i++) {
+            string preStr = src.substr(i-2, 2);
+
+            int newNow = preStr >= "10" && preStr <= "25" ? prev + now : now;
+            prev = now;
+            now = newNow;
+        }
+        return now;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
