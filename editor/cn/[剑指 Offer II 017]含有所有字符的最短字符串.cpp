@@ -53,7 +53,22 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
+        /*
 
+        */
+        int n = s.size(), m = t.size();
+        if (m > n) return "";
+
+        int left = 0, right = 0;
+
+        vector<int> tCnt(26), sCnt(26);
+        for (int i=0; i<m; i++) {
+            tCnt[t[i]-'a']++;
+        }
+
+        while (right < n) {
+
+        }
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

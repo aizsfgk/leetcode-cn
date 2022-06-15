@@ -48,14 +48,13 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+/*
 private:
     int ans;
     vector<int> path;
 
-    /*
-        这道题回溯会超时，需要使用动态规划方法
 
-    */
+        //这道题回溯会超时，需要使用动态规划方法
     void backtracking(vector<int> &nums, int idx, int target) {
         if (target < 0) {
             return;
@@ -77,6 +76,23 @@ public:
     int combinationSum4(vector<int>& nums, int target) {
         backtracking(nums, 0, target);
         return ans;
+    }
+*/
+public:
+    int combinationSum4(vector<int>& nums, int target) {
+        // 正数具有单调递增性
+        vector<unsigned int> dp(target+1, 0);
+
+        dp[0] = 1; // 空数组，目标和是0,有一种方案
+
+        for (int i=1; i<=target; i++) {
+            for (int num : nums) {
+                if (num <= i) {
+                    dp[i] += dp[i-num];
+                }
+            }
+        }
+        return dp.back();
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

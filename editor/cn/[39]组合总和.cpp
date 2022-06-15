@@ -61,6 +61,14 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 private:
+    /*
+    四个问题：
+    1. 可选元素中是否包含重复元素(如果重复，可能需要同层去重)
+    2. 是否可以重复地使用同一个元素
+    3. 结果path中是否可以含有不同的元素
+    4. 结果ans中，是否不能含有重复的元素(layerUse 去重)
+
+    */
     vector<vector<int>> ans;
     vector<int> path;
 
