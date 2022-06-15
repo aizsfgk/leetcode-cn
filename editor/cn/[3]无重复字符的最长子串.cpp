@@ -54,7 +54,6 @@ public:
 
         int left = 0, right = 0;
 
-
         int res = 0;
         while(right < s.size()) {
             char c = s[right];

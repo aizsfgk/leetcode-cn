@@ -65,25 +65,57 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class MyQueue {
+private:
+    stack<int> stk1;
+    stack<int> stk2;
+
 public:
     MyQueue() {
 
     }
     
     void push(int x) {
-
+        stk2.push(x);
     }
     
     int pop() {
+        if (!stk1.empty()) {
+            int rs =  stk1.top();
+            stk1.pop();
+            return rs;
+        }
 
+        while (!stk2.empty()) {
+            stk1.push(stk2.top());
+            stk2.pop();
+        }
+
+        int rs = stk1.top();
+        stk1.pop();
+        return rs;
     }
     
     int peek() {
+        if (!stk1.empty()) {
+            int rs =  stk1.top();
+            return rs;
+        }
 
+        while (!stk2.empty()) {
+            stk1.push(stk2.top());
+            stk2.pop();
+        }
+
+        int rs = stk1.top();
+        return rs;
     }
     
     bool empty() {
-
+        if (!stk1.empty()) {
+            return false;
+        } else {
+            return stk2.empty();
+        }
     }
 };
 
