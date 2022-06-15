@@ -123,7 +123,7 @@ public:
         }
 
         // 找到数字对应的字符串
-        string ele = myMap[digits[startIdx]];
+        string ele = myMap[ [startIdx]];
 
         // 遍历每个字符串;
         for (int i=0; i<ele.size(); i++) {   // 宽度是映射字符串的长度
