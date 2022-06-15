@@ -51,24 +51,55 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    // ori 原始的字符数
+    // cnt 表示窗口的字符数
+    unordered_map<char, int> ori, cnt;
+
+    bool check() {
+        for (auto &p : ori) {
+            if (cnt[p.first] < p.second) return false;
+        }
+        return true;
+    }
 public:
     string minWindow(string s, string t) {
-        /*
-
-        */
-        int n = s.size(), m = t.size();
-        if (m > n) return "";
-
-        int left = 0, right = 0;
-
-        vector<int> tCnt(26), sCnt(26);
-        for (int i=0; i<m; i++) {
-            tCnt[t[i]-'a']++;
+        // 计算 t 每个字符的个数
+        for (char c : t) {
+            ori[c]++;
         }
 
-        while (right < n) {
+        // 窗口左右辩解
+        int l = 0, r = 0;
 
+        // 最大长度和左边界索引
+        int len = INT_MAX, ansL = -1;
+
+        while (r < s.size()) {
+            // 指定字符个数++
+            cnt[s[r]]++;
+            r++;
+
+            // 找到可行解
+            // 开始缩小范围
+            while (check() && l <= r) {
+
+                // 符合条件则记录
+                if (r - l< len) {
+                    len = r - l;
+                    ansL = l;
+                }
+
+                // 剔除多余字符
+                cnt[s[l]]--;
+                l++;
+            }
         }
+
+        // 返回答案
+        return ansL == -1 ? "" : s.substr(ansL, len);
+
+
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
