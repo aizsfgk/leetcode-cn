@@ -55,6 +55,7 @@ public:
             } else {
                 continue;
             }
+            
             // 记录
             used[nums[i]+100] = 1;
 
