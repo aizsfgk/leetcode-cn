@@ -49,7 +49,7 @@ private:
 
         // 开始回溯
         for (int i=0; i<nums.size(); i++) {
-            // 使用过的数字，跳过
+            // 使用过的数字（使用过的索引位置），跳过
             if (used[i] == 1) {
                 continue;
             }
