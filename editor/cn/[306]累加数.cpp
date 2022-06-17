@@ -40,9 +40,58 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+    /*
+        string dfs : 字符串深度优先遍历
+
+    */
 public:
     bool isAdditiveNumber(string num) {
+        return dfs(num, 0, 0, 0, 0);
+    }
 
+    bool dfs(const string &num, int idx, int count, long long prev2,long long prev) {
+        // 个数大于2, 返回true
+        if (idx >= num.size()) { // 终止条件
+            return count > 2;
+        }
+
+        long long current = 0;
+        for (int i=idx; i<num.size(); i++) {
+            char c = num[i];
+
+            if (num[idx] == '0' && i > idx) {
+                // 剪枝1：不能作为前导0，但是可以单独作为0使用
+                return false;
+            }
+
+            current = current * 10 + (c - '0');
+
+            if (current > (1e18 - 1)) //防止溢出 这是17位的9
+                return false;
+
+            if (count >= 2) {
+                long long sum = prev2 + prev;
+                if (current > sum) {
+                    // 剪枝2： 如果当前数比之前两数的和大了，说明不合适
+                    return false;
+                }
+
+                if (current < sum) {
+                    // 剪枝3：如果当前数比之前两数的和小了，说明还不够，可以继续添加新的字符进来
+                    continue;
+                }
+
+                // 其他继续dfs
+            }
+
+            // 迭代返回
+            if (dfs(num, i+1, count+1, prev, current)) {
+                return true;
+            }
+
+        }
+
+        return false;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
