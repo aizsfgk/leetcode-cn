@@ -36,9 +36,63 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+/*
+    本题和划分为K个相等的子集算法一致
+
+*/
+private:
+    int target;
+
+    bool dfs(const vector<int> &matchsticks, vector<int> &used, int idx, int kSum, int k) {
+        // 说明正好符合条件
+        if (k == 0) {
+            return true;
+        }
+
+
+        for (int i=idx; i<matchsticks.size(); i++) {
+
+            if (used[i] == 1) { // 被选过，则跳过；正常逻辑
+                continue;
+            }
+
+            // 同样的数字，上次没用，这次也不应该用
+            if (i > 0 && matchsticks[i-1] == matchsticks[i] && !used[i-1]) {
+                continue;
+            }
+
+            int tmp = kSum + matchsticks[i]; // 加上本次的数
+
+            if (tmp > target) { // 大于目标，跳过
+                continue;
+            }
+
+            // 根据和是否等于目标，决定下一轮的参数情况
+            int nextIdx = (tmp == target) ? 0 : i+1;  // 等于
+            int nextKSum = tmp == target ? 0 : tmp;
+            int nextK = tmp == target ? k-1 : k;
+
+            used[i] = 1;
+            if (dfs(matchsticks, used, nextIdx, nextKSum, nextK)) { return true; }
+            used[i] = 0;
+
+        }
+        return false;
+    }
+
 public:
     bool makesquare(vector<int>& matchsticks) {
+        // 等分到四个桶里边
+        int n = matchsticks.size();
+        if (n < 4) return false;
 
+        int sum = accumulate(matchsticks.begin(), matchsticks.end(), 0);
+        if (sum % 4 != 0) return false;
+
+        target = sum / 4;
+
+        vector<int> used(n);
+        return dfs(matchsticks, used, 0, 0, 4);
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
