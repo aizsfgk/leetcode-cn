@@ -53,9 +53,9 @@ public:
             if (nums[i] >= preNum && used[nums[i]+100] != 1) { // 大于前一个值，并且同层没有使用过该数
                 path.push_back(nums[i]);
             } else {
-                continue;
+                continue; // 不符合的不选择
             }
-            
+
             // 记录
             used[nums[i]+100] = 1;
 
