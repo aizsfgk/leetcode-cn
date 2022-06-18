@@ -37,6 +37,7 @@ private:
 
     // 回溯和深度优先遍历是一个东西吗?
     bool backtracking(vector<int>& nums, int idx, int kSum, int k) {
+        // 结束条件
         if (k==0) {
             return true;
         }
@@ -49,11 +50,13 @@ private:
             int tmp = kSum + nums[i];
             if (tmp > target) continue; // 目标和不符合跳过
 
-            int nextKSum = (tmp == target) ? 0 : tmp;
+            int nextKSum = (tmp == target) ? 0 : tmp;  // 如果找到则继续从0找
             int nextIdx = (tmp == target) ? 0 : i+1;
             int nextK = (tmp == target) ? k-1 : k;
 
-            // 同层去重
+            // 同层去重;
+            // 上一个相同元素没有使用，说明不符合条件
+            // 那么本轮肯定也不符合啊，所以不选了
             if (i > 0 && nums[i-1] == nums[i] && !visited[i-1]) continue;
 
             visited[i] = true;

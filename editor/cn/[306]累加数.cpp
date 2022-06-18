@@ -51,7 +51,7 @@ public:
 
     bool dfs(const string &num, int idx, int count, long long prev2,long long prev) {
         // 个数大于2, 返回true
-        if (idx >= num.size()) {
+        if (idx >= num.size()) { // 终止条件
             return count > 2;
         }
 
@@ -66,7 +66,7 @@ public:
 
             current = current * 10 + (c - '0');
 
-            if (current > 99999999999999999) //防止溢出 这是17位的9
+            if (current > (1e18 - 1)) //防止溢出 这是17位的9
                 return false;
 
             if (count >= 2) {
@@ -84,6 +84,7 @@ public:
                 // 其他继续dfs
             }
 
+            // 迭代返回
             if (dfs(num, i+1, count+1, prev, current)) {
                 return true;
             }

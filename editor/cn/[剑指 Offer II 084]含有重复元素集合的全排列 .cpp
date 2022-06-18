@@ -1,4 +1,4 @@
-//给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。 
+//给定一个可包含重复数字的整数集合 nums ，按任意顺序 返回它所有不重复的全排列。 
 //
 // 
 //
@@ -27,8 +27,11 @@
 // 1 <= nums.length <= 8 
 // -10 <= nums[i] <= 10 
 // 
-// Related Topics 数组 回溯 
-// 👍 914 👎 0
+//
+// 
+//
+// 注意：本题与主站 47 题相同： https://leetcode-cn.com/problems/permutations-ii/ 
+// Related Topics 数组 回溯 👍 23 👎 0
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
@@ -37,44 +40,38 @@ private:
     vector<vector<int>> ans;
     vector<int> path;
 
-    void backtracking(vector<int> &nums, vector<int> used) {
-        // 符合条件的全排列
-        if (nums.size() == path.size()) {
+    void backtracking(const vector<int> &nums, vector<int> &used) {
+        if (path.size() == nums.size()) {
             ans.push_back(path);
             return;
         }
 
-        // 同层是否使用过?
         int layerUsed[21] = {0};
-
-        // 开始回溯
         for (int i=0; i<nums.size(); i++) {
-            // 使用过的数字（使用过的索引位置），跳过
             if (used[i] == 1) {
                 continue;
             }
 
-            // 同层使用过的数字跳过，防止重复数字
-            if (layerUsed[nums[i] + 10] == 1) {
+            if (layerUsed[nums[i]+10] == 1) { // 这个数已经使用过了; 则不再使用
                 continue;
             }
 
-            path.push_back(nums[i]);
             used[i] = 1;
-            layerUsed[nums[i] + 10] = 1;
+            layerUsed[nums[i]+10] = 1;
+
+            path.push_back(nums[i]);
             backtracking(nums, used);
-            used[i] = 0;
             path.pop_back();
+
+            used[i] = 0;
         }
-
     }
-
 public:
     vector<vector<int>> permuteUnique(vector<int>& nums) {
-        if (nums.size() == 0)
-            return ans;
+        int n = nums.size();
+        if (n==0) return ans;
 
-        vector<int> used(nums.size(), 0);
+        vector<int> used(n);
         backtracking(nums, used);
         return ans;
     }

@@ -54,7 +54,29 @@
 class Solution {
 public:
     vector<string> readBinaryWatch(int turnedOn) {
+        // 亮灯数量
+        // 0-11
+        // 0-59
 
+        vector<string> ans;
+        for (int h=0; h<12; h++) {
+            for (int m=0; m<60; m++) {
+                if (bit1Count(h) + bit1Count(m) == turnedOn) {
+                    ans.push_back(to_string(h) + ":" + (m < 10 ? "0" : "") + to_string(m));
+                }
+            }
+        }
+        return ans;
+    }
+
+    int bit1Count(int n) {
+        int ans = 0;
+        while (n) {
+            if (n & 1)
+                ans++;
+            n >>= 1;
+        }
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

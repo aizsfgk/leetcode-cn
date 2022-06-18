@@ -63,6 +63,12 @@ private:
         }
 
         for (int i=startIdx; i<candidates.size() && candidates[i] <= target; i++) {
+            /*
+               为啥和 子集2 的同层去重不一样?
+                答： 考虑的点不一样；
+                子集问题，只是选不选；只强调重复性
+                组合问题，目的是为了组成target; 情况是 path 中可以有重复元素； 而同层分叉的时候，如果之前相同的元素没有用，本次也应该不用
+            */
             // used[i - 1] == true， 说明同⼀树⽀candidates[i - 1]使⽤过; 可以继续
 
             // used[i - 1] == false，说明同⼀树层candidates[i - 1]使⽤过
