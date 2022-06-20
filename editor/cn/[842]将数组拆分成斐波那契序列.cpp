@@ -50,9 +50,59 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    // pre2, pre
+    // dfs
+    // 和累加数类似
+
+    // 可能的结果
+    vector<int> ans;
+    // 结果结合中的一个结果
+    vector<int> path;
+
+    // 前1/前2个数
+    void backtracking(const string &num, int idx, int count, long long prev2, long long prev) {
+
+        // 索引结束、个数符合
+        if (idx >= num.size() && count >= 3) {
+            ans = path;
+            return;
+        }
+
+        long long cur = 0;
+        for (int i=idx; i<num.size(); i++) {
+
+            if (num[idx] == '0' && i > idx) {
+                // 剪枝1：不能作为前导0，但是可以单独作为0使用
+                return;
+            }
+
+            cur = cur * 10 + (num[i] - '0');
+            if (cur > INT_MAX) // 2. 大于INT_MAX 剪枝
+                return;
+
+            if (count >= 2) {
+                long long sum = prev2 + prev;
+                if (sum > INT_MAX) // 3. sum > INT_MAX ，剪枝
+                    return;
+
+                if (cur > sum) return; // 4. 当前大于 剪枝
+
+                if (cur < sum) continue; // 5. 小于，还能增加数字
+            }
+
+            path.push_back((int)cur);
+            backtracking(num, i+1, count+1, prev, cur);
+            path.pop_back();
+        }
+    }
 public:
     vector<int> splitIntoFibonacci(string num) {
+        if (num.size() < 3) return ans;
 
+        backtracking(num, 0, 0, 0, 0);
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
