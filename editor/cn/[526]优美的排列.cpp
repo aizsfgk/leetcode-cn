@@ -42,9 +42,53 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    int ans = 0;
+    vector<int> path;
+//    bool check(const vector<int> &path) {
+//        for (int i=0; i<path.size(); i++) {
+//            if ((path[i] % (i+1) != 0) && ((i+1) % (path[i]) != 0)) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+
+//    void printVector(const vector<int> &path) {
+//        for (auto num : path) {
+//            cout << num << ",";
+//        }
+//        cout << endl;
+//    }
+    void backtracking(int n, int idx, vector<bool> &used) {
+        if (idx > n) {
+            ans++;
+            return;
+        }
+
+
+        for (int i=1; i<=n; i++) {
+            if (used[i]) {
+                continue;
+            }
+
+            used[i] = true;
+//            path.push_back(i+1);
+            if (i%idx == 0 || idx%i == 0) {
+                backtracking(n, idx+1, used);
+            }
+
+//            path.pop_back();
+            used[i] = false;
+        }
+    }
 public:
     int countArrangement(int n) {
+        if (n <= 1) return n;
 
+        vector<bool> used(n);
+        backtracking(n, 1, used);
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

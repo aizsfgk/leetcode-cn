@@ -85,7 +85,7 @@ public:
 
         dp[0] = 1; // 空数组，目标和是0,有一种方案
 
-        for (int i=1; i<=target; i++) {
+        for (int i=1; i<=target; i++) { // 目标和
             for (int num : nums) {
                 if (num <= i) {
                     dp[i] += dp[i-num];
