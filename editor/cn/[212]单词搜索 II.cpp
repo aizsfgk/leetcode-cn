@@ -39,9 +39,26 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    vector<string> ans;
+    string path;
+
+    vector<vector<bool>> visited;
+
+    void dfs(const vector<vector<char>> &board, int i, int j) {
+
+    }
+
 public:
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        int m = board.size(), n = board[0].size();
+        visited = vector<vector<bool>>(m, vector<bool>(n, false));
 
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; j++) {
+                dfs(board, i, j);
+            }
+        }
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
