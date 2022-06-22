@@ -41,24 +41,58 @@
 class Solution {
 private:
     vector<string> ans;
-    string path;
 
-    vector<vector<bool>> visited;
+    int m;
+    int n;
 
-    void dfs(const vector<vector<char>> &board, int i, int j) {
+    unordered_set<string> memo;
 
+    int dirs[4][2] = {{-1,0}, {1, 0}, {0, -1}, {0, 1}};
+
+    void dfs(const vector<vector<char>> &board, vector<vector<bool>> &visited, string curStr, int i, int j) {
+        curStr.push_back(board[i][j]);
+
+        if (curStr.size() > 10) return;
+
+        if (memo.find(curStr) != memo.end()) {
+            ans.push_back(curStr);
+            memo.erase(curStr);
+        }
+
+        for (auto dir : dirs) {
+            int newX = dir[0] + i;
+            int newY = dir[1] + j;
+
+            if (newX >= 0 && newY >= 0 && newX < m && newY < n && !visited[newX][newY]) {
+                visited[newX][newY] = true;
+                dfs(board, visited, curStr, newX, newY);
+                 visited[newX][newY] = false;
+            }
+        }
     }
 
 public:
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
-        int m = board.size(), n = board[0].size();
-        visited = vector<vector<bool>>(m, vector<bool>(n, false));
+
+        m = board.size();
+        n = board[0].size();
+
+        vector<vector<bool>> visited(m, vector<bool>(n));
+
+        for (const string &s : words) {
+            memo.insert(s);
+        }
 
         for (int i=0; i<m; i++) {
             for (int j=0; j<n; j++) {
-                dfs(board, i, j);
+                visited[i][j] = true;
+                dfs(board, visited, "", i, j);
+                visited[i][j] = false;
             }
         }
+
+        return ans;
+
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
