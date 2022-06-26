@@ -77,8 +77,6 @@ public:
 */
 
 class Solution {
-private:
-    Node *dfs(Node *)
 public:
     Node* insert(Node* head, int insertVal) {
         

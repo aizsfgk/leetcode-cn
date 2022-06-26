@@ -62,58 +62,67 @@ class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         stack<int> stk1, stk2;
-        while (l1) {
+
+        while(l1) {
             stk1.push(l1->val);
             l1 = l1->next;
         }
-        while (l2) {
+        while(l2) {
             stk2.push(l2->val);
             l2 = l2->next;
         }
 
-        int cur = 0;
-        int carry = 0;
-        ListNode dummy(-1), *curPtr = &dummy;
+        int cur = 0, carry  = 0;
+        ListNode *ptr = nullptr;
         while (!stk1.empty() && !stk2.empty()) {
-            int sum = stk1.top() + stk2.top() + carry;
+            int num1 = stk1.top(); stk1.pop();
+            int num2 = stk2.top(); stk2.pop();
+
+            int sum = (num1 + num2 + carry);
             cur = sum % 10;
             carry = sum / 10;
-            stk1.pop(); stk2.pop();
 
-            ListNode *next = curPtr->next;
-            curPtr->next = new ListNode(cur);
-            curPtr->next->next = next;
+            ListNode *next = ptr;
+            ptr = new ListNode(cur);
+            ptr->next = next;
         }
 
         while (!stk1.empty()) {
-            int sum = stk1.top()  + carry;
+            int num1 = stk1.top(); stk1.pop();
+
+
+            int sum = (num1 + carry);
             cur = sum % 10;
             carry = sum / 10;
-            stk1.pop();
 
-            ListNode *next = curPtr->next;
-            curPtr->next = new ListNode(cur);
-            curPtr->next->next = next;
+            ListNode *next = ptr;
+            ptr = new ListNode(cur);
+            ptr->next = next;
         }
 
         while (!stk2.empty()) {
-            int sum =  stk2.top() + carry;
+
+            int num2 = stk2.top(); stk2.pop();
+
+            int sum = (num2 + carry);
             cur = sum % 10;
             carry = sum / 10;
-            stk1.pop();
 
-            ListNode *next = curPtr->next;
-            curPtr->next = new ListNode(cur);
-            curPtr->next->next = next;
+            ListNode *next = ptr;
+            ptr = new ListNode(cur);
+            ptr->next = next;
         }
 
         if (carry) {
-            ListNode *next = curPtr->next;
-            curPtr->next = new ListNode(carry);
-            curPtr->next->next = next;
-        }
+            int sum = carry;
+            cur = sum % 10;
+            carry = sum / 10;
 
-        return dummy.next;
+            ListNode *next = ptr;
+            ptr = new ListNode(cur);
+            ptr->next = next;
+        }
+        return ptr;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
