@@ -51,25 +51,48 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class RandomizedSet {
+private:
+    vector<int> nums;
+    unordered_map<int, int> indices;
 public:
     /** Initialize your data structure here. */
     RandomizedSet() {
-
+        srand((unsigned)time(NULL));
     }
     
     /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
     bool insert(int val) {
+        if (indices.count(val)) {
+            return false;
+        }
 
+        int idx = nums.size();
+        nums.push_back(val);
+        indices[val] = idx;
+        return true;
     }
     
     /** Removes a value from the set. Returns true if the set contained the specified element. */
     bool remove(int val) {
+        if (!indices.count(val)) {
+            return false;
+        }
 
+        int idx = indices[val];
+        int last = nums.back();
+
+        nums[idx] = last;
+        indices[last] = idx;
+
+        nums.pop_back();
+        indices.erase(val);
+        return true;
     }
     
     /** Get a random element from the set. */
     int getRandom() {
-
+        int rIdx = rand() % nums.size();
+        return nums[rIdx];
     }
 };
 

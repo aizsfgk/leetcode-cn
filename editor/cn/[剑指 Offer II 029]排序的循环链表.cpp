@@ -79,7 +79,49 @@ public:
 class Solution {
 public:
     Node* insert(Node* head, int insertVal) {
-        
+        Node *node = new Node(insertVal);
+        // 1. 空结点
+        if (head == nullptr) {
+            node->next = node;
+            return node;
+        }
+        // 2. 一个结点
+        if (head->next == head) {
+            head->next = node;
+            node->next = head;
+            return head;
+        }
+
+        // 3. 大于1个结点
+        Node *curr = head, *next = head->next;
+
+        // 下一个结点不等于头结点；没有跑一轮
+        while (next != head) {
+            // 找到合适位置，break
+            if (insertVal >= curr->val && insertVal <= next->val) {
+                break;
+            }
+
+            // 非顺序，则大于当前的大值
+            // 或者小于下一个小值；break
+            if (curr->val > next->val) {
+                if (insertVal > curr->val || insertVal < next->val) {
+                    break;
+                }
+            }
+
+            // 各向前一步
+            curr = curr->next;
+            next = next->next;
+        }
+
+        // 当前指向node
+        // node指向next
+        curr->next = node;
+        node->next = next;
+
+        // 返回
+        return head;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
