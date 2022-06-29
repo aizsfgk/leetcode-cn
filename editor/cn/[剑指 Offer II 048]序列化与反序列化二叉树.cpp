@@ -73,21 +73,72 @@ public:
         string ans;
         if (!root) {
             ans += "#,";
-            return;
+            return ans;
         }
 
         queue<TreeNode *> que;
         que.push(root);
 
         while (!que.empty()) {
+            root = que.front(); que.pop();
 
+            if (root) {
+                ans += to_string(root->val) + ",";
+                que.push(root->left);
+                que.push(root->right);
+            } else {
+                ans += "#,";
+            }
         }
 
+        return ans;
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-        
+        // 字符串转换为二叉树
+        vector<string> dataArray = string2array(data);
+
+        if (dataArray.size() == 1 && dataArray[0] == "#") return nullptr;
+
+        TreeNode *root = new TreeNode(stoi(dataArray[0]));
+
+        int cursor = 1;
+        queue<TreeNode*> que;
+        que.push(root);
+
+        while (!que.empty()) {
+            TreeNode *cur = que.front(); que.pop();
+
+            string leftVal = dataArray[cursor];
+            string rightVal = dataArray[cursor+1];
+
+            if (leftVal != "#") {
+                cur->left = new TreeNode(stoi(leftVal));
+                que.push(cur->left);
+            }
+
+            if (rightVal != "#") {
+                cur->right = new TreeNode(stoi(rightVal));
+                que.push(cur->right);
+            }
+            cursor += 2;
+        }
+        return root;
+    }
+
+    vector<string> string2array(const string &data) {
+        vector<string> ans;
+
+        int startIdx = 0;
+        for (int i=0; i<data.size(); i++) {
+            if (data[i] == ',') {
+                string sub = data.substr(startIdx, i-startIdx);
+                ans.push_back(sub);
+                startIdx = i+1;
+            }
+        }
+        return ans;
     }
 };
 

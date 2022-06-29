@@ -68,9 +68,30 @@
  * };
  */
 class Solution {
+private:
+    int ans = 0;
+
+    void dfs(TreeNode *root, int sum) {
+        if (!root->left && !root->right) {
+            ans += sum + root->val;
+            return;
+        }
+
+        if (root->left) {
+            dfs(root->left, (sum +root->val) * 10);
+        }
+
+        if (root->right) {
+            dfs(root->right, (sum+root->val) * 10);
+        }
+    }
+
 public:
     int sumNumbers(TreeNode* root) {
+        if (!root) return 0;
 
+        dfs(root, 0);
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
