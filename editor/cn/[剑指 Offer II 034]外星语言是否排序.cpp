@@ -50,7 +50,33 @@
 class Solution {
 public:
     bool isAlienSorted(vector<string>& words, string order) {
+        vector<string> ori;
+        ori.assign(words.begin(), words.end());
 
+        unordered_map<char, int> dict;
+        for (int i=0; i<order.size(); i++) {
+            dict[order[i]] = i;
+        }
+
+        sort(words.begin(), words.end(), [&](const string &a, const string &b){
+            int len = min(a.size(), b.size());
+
+            for (int i=0; i<len; i++) {
+                // 这一点很重要啊
+                if (dict[a[i]] < dict[b[i]]) {
+                    return true;
+                } else if (dict[a[i]] > dict[b[i]]) {
+                    return false;
+                } else {
+                    continue; // 相等的情况跳过
+                }
+            }
+
+            // 长度不一样才会再进行判断
+            return a.size() <= b.size();
+        });
+
+        return ori == words;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
