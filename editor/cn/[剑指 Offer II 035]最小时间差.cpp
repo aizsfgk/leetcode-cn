@@ -54,6 +54,7 @@ public:
         // circle array
         sort(timeNum.begin(), timeNum.end());
 
+        // 方法很取巧
         int ans = timeNum[1] - timeNum[0];
         for (int i=2; i<timeNum.size(); i++) {
             ans = min(ans, timeNum[i] - timeNum[i-1]);

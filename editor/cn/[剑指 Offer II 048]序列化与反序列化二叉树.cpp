@@ -70,7 +70,19 @@ public:
 
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
-        
+        string ans;
+        if (!root) {
+            ans += "#,";
+            return;
+        }
+
+        queue<TreeNode *> que;
+        que.push(root);
+
+        while (!que.empty()) {
+
+        }
+
     }
 
     // Decodes your encoded data to tree.
