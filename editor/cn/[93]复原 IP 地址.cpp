@@ -94,7 +94,6 @@ public:
         }
 
         // cout << "ipNum: " << ret << endl;
-
         if (ret >=0 && ret <= 255) {
             return true;
         }

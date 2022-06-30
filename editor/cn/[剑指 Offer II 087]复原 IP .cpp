@@ -59,9 +59,69 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+    vector<string> ans;
+    vector<string> path;
+
+    string path2IP(const vector<string> &path) {
+        string ip;
+        for (string p : path) {
+            ip += p + ".";
+        }
+        ip.pop_back();
+        return ip;
+    }
+
+    bool isValid(const string &s) {
+        //
+        if (s.size() == 0 || s.size() > 3) return false;
+
+        // 0.0.0.0 这种情况判断
+        if (s.size() > 1 && s[0] == '0') return false;
+
+        int idx = 0;
+        int ret = 0;
+
+        while (idx < s.size()) {
+            ret = ret * 10 + (s[idx] - '0');
+            idx++;
+        }
+
+        if (ret >= 0 && ret <= 255) {
+            return true;
+        }
+        return false;
+    }
+
+    void backtracking(const string &s, int idx) {
+        if (path.size() > 4 || idx > s.size()) return;
+
+        if (path.size() == 4 && idx >= s.size()) {
+            ans.push_back(path2IP(path));
+            return;
+        }
+
+        for (int i=idx; i<s.size(); i++) {
+            string substr = s.substr(idx, i-idx+1);
+            if (isValid(substr)) {
+                path.push_back(substr);
+            } else {
+                continue;
+            }
+
+            backtracking(s, i+1);
+            path.pop_back();
+        }
+    }
 public:
     vector<string> restoreIpAddresses(string s) {
+        //
+        // 字符串切割问题
+        //
+        if (s.empty()) return ans;
 
+        backtracking(s, 0);
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
