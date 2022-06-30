@@ -66,7 +66,19 @@
 class Solution {
 public:
     TreeNode* pruneTree(TreeNode* root) {
+        if (!root) return nullptr;
 
+        TreeNode *left = pruneTree(root->left);
+        TreeNode *right = pruneTree(root->right);
+
+        // 后序处理：将尾节点为0的节点删掉
+        if (root->val == 0 && !left && !right) {
+            return nullptr;
+        }
+
+        root->left = left;
+        root->right = right;
+        return root;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

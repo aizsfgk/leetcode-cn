@@ -59,7 +59,6 @@ private:
             return;
         }
 
-        int layerUsed[51] = {0};
         for (int i=idx; i<candidates.size(); i++) {
 
             /*
