@@ -44,10 +44,42 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 private:
-    
+    int ans = 0;
+    int m, n;
+    int dirs[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+    int dfs(vector<vector<int>> &grid, int x, int y) {
+        if (grid[x][y] == 0) return 0;
+
+        grid[x][y] = 0;
+
+        // 初始面积是1
+        int area = 1;
+        for (auto dir : dirs) {
+            int nx = dir[0] + x;
+            int ny = dir[1] + y;
+            if (nx >=0 && nx < m && ny >=0 && ny < n && grid[nx][ny] == 1) {
+                area += dfs(grid, nx, ny); /// 累加面积
+            }
+        }
+        // 返回面积
+        return area;
+    }
 public:
     int maxAreaOfIsland(vector<vector<int>>& grid) {
+        // 求一个最大值
+        m = grid.size();
+        n = grid[0].size();
 
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; j++) {
+                if (grid[i][j] == 1) {
+                    ans = max(ans, dfs(grid, i, j));
+                }
+            }
+        }
+
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
