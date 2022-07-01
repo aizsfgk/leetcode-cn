@@ -70,6 +70,7 @@ public:
 
             root = stk.top(); stk.pop();
 
+            // 知道头部节点
             if (prev == nullptr) {
                 first = root;
             } else {
