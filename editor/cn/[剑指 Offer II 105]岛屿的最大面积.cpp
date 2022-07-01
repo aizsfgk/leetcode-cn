@@ -43,6 +43,8 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    
 public:
     int maxAreaOfIsland(vector<vector<int>>& grid) {
 
