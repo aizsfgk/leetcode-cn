@@ -74,7 +74,7 @@ public:
             if (prev == nullptr) {
                 first = root;
             } else {
-                prev->right = root;
+                prev->right = root; // 前一个节点的右节点，指向当前节点
             }
 
             root->left = nullptr;
