@@ -37,24 +37,6 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-private:
-    bool ans = false;
-    void backtracking(const vector<int> &nums, int idx, int target) {
-
-        if (target == 0) {
-            ans = true;
-            return;
-        }
-
-        if (target < 0) {
-            return;
-        }
-
-        for (int i=idx; i<nums.size(); i++) {
-            backtracking(nums, i+1, target-nums[i]);
-        }
-    }
-
 public:
     bool canPartition(vector<int>& nums) {
         int sum = accumulate(nums.begin(), nums.end(), 0);
@@ -62,11 +44,23 @@ public:
 
         int target = sum / 2;
 
-        sort(nums.begin(), nums.end());
+        // dp[i] 重量为i的背包，最多可以收纳的容量是dp[i]
+        // 01背包
+        vector<int> dp(20001, 0);
+        for (int i=0; i<nums.size(); i++) { // 遍历物品
+            for (int j=target; j>=nums[i]; j--) { // 遍历背包重量; 从后向前遍历，防止重复选择
+                // i 位置的物品 重量是nums[i], 价值也是nums[i];
+                dp[j] = max(dp[j], dp[j-nums[i]] + nums[i]); /// 最大的一个价值
+            }
+        }
 
-        backtracking(nums, 0, target);
+        /// dp[i]的数值一定是小于等于i的。
+        /// 如果dp[i] == i 说明，集合中的子集总和正好可以凑成总和i，理解这一点很重要。
+        // target 重量的 价值 也是 target;
+        // 说明可以选出物品组成 target 数
+        if (dp[target] == target) return true;
 
-        return ans;
+        return false;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

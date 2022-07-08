@@ -93,6 +93,8 @@ public:
             https://leetcode-cn.com/problems/target-sum/solution/dai-ma-sui-xiang-lu-494-mu-biao-he-01bei-rte9/
         */
 
+        // left - (sum - left) = target
+        // left = (sum + target) / 2 ; // left的方案数
         int S = target;
 
         // 1. 求总和
@@ -107,7 +109,8 @@ public:
 
         int bagSize = (S + sum) / 2;
         vector<int> dp(bagSize + 1, 0);
-        dp[0] = 1;
+
+        dp[0] = 1; // 1种方案
         for (int i = 0; i < nums.size(); i++) {
             for (int j = bagSize; j >= nums[i]; j--) {
                 dp[j] += dp[j - nums[i]];
