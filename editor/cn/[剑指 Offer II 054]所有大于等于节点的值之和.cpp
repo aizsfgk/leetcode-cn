@@ -78,10 +78,67 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    TreeNode* convertBST(TreeNode* root) {
+    int dfs(TreeNode *root) {
+        // 返回当前结点右子树的全部和
+        if (!root) return 0;
 
+        int left = dfs(root->left);
+        int right = dfs(root->right);
+        int val = root->val;
+
+        return left+right+val;
+    }
+
+    int sum = 0;
+    void midVisit(TreeNode *root) {
+        if (!root) return;
+
+        stack<TreeNode *> stk;
+        // stk.push(root);
+
+        while (root != nullptr || !stk.empty()) {
+
+            while (root != nullptr) {
+                stk.push(root);
+                root = root->left;
+            }
+
+            // 拿到当前结点
+            root = stk.top(); stk.pop();
+
+            // 记录结点值
+            int curVal = root->val;
+            // 修改结点值
+            root->val = sum;
+            // 更新sum
+            sum -= curVal;
+
+            root = root->right;
+        }
+
+    }
+
+
+    TreeNode* convertBST(TreeNode* root) {
+        if (!root) return root;
+
+        sum = dfs(root);
+        midVisit(root);
+
+        return root;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

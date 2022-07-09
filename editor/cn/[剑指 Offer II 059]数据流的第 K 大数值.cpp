@@ -49,13 +49,26 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class KthLargest {
+private:
+    int K;
+    priority_queue<int, vector<int>, greater<int>> bigQue;   // 小根堆
+//    priority_queue<int> smallQue; // 大根堆
 public:
     KthLargest(int k, vector<int>& nums) {
-
+        K = k;
+        for (int num : nums) {
+            bigQue.push(num);
+        }
     }
     
     int add(int val) {
+        bigQue.push(val);
 
+        while (bigQue.size() > K) {
+            bigQue.pop();
+        }
+
+        return bigQue.top();
     }
 };
 
