@@ -41,12 +41,7 @@
 // 1 <= arr[i] < arr[i + 1] <= 10^9 
 // 
 // 
-//
-// 
-//
-// 注意：本题与主站 873 题相同： https://leetcode-cn.com/problems/length-of-longest-
-//fibonacci-subsequence/ 
-// Related Topics 数组 哈希表 动态规划 👍 41 👎 0
+// Related Topics 数组 哈希表 动态规划 👍 328 👎 0
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
@@ -54,22 +49,14 @@ class Solution {
 public:
     int lenLongestFibSubseq(vector<int>& arr) {
         int n = arr.size();
-
-
-        // dp[i][j] : i ~ j 区间的最大斐波那契序列长度
-        vector<vector<int>> dp(n, vector<int>(n, 2)); // 初始化模式是2
-
-        // 用于判断k是否存在
-        // dp[k] + dp[i] = dp[j]
-        // dp[j] = dp[i] + 1
-        unordered_map<int, int> memo;
+        vector<vector<int>> dp(n, vector<int>(n, 2));
 
         int ans = 0;
-        // n^2 次方
         for (int i=0; i<n; i++) {
             int k = 0;
             for (int j=i+1; j<n; j++) {
                 int pre = arr[j] - arr[i];
+
                 while (k < i && arr[k] < pre) {
                     k++;
                 }
@@ -82,7 +69,7 @@ public:
                 }
             }
         }
-        return ans >= 3 ? ans : 0;
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
