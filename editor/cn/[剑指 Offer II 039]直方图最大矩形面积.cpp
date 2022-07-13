@@ -40,9 +40,37 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+// time: O(n)
+// space: O(n)
 public:
     int largestRectangleArea(vector<int>& heights) {
+        // 1. 使用单调栈来解决该问题
+        int n = heights.size();
 
+        // 2. 确定左右边界序列
+        vector<int> left(n), right(n, n);
+
+        // 3. 开始遍历heights
+        stack<int> monoStk; // 单调队列 这个单词不错，可以使用
+        for (int i=0; i<n; i++) {
+            while (!monoStk.empty() && heights[i] < heights[monoStk.top()]) {
+                // 这里需要入右单调栈
+                right[monoStk.top()] = i;
+
+                monoStk.pop();
+            }
+
+            left[i] = monoStk.empty() ? -1 : monoStk.top();
+            monoStk.push(i);
+        }
+
+        // 找到最大结果
+        int ans = 0;
+        for (int i=0; i<n; i++) {
+            ans = max( ans, (right[i] - left[i] - 1 ) * heights[i] );
+        }
+        return ans;
     }
 };
+
 //leetcode submit region end(Prohibit modification and deletion)

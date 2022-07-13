@@ -59,17 +59,46 @@
  * };
  */
 class CBTInserter {
+/*
+完全二叉树插入新节点:
+
+使用队列的方式:
+*/
+private:
+    TreeNode *realRoot;
+    deque<TreeNode*> deq;
 public:
     CBTInserter(TreeNode* root) {
-
+        realRoot = root;
     }
     
     int insert(int v) {
+        TreeNode *newNode = new TreeNode(v);
 
+        if (deq.empty()) {
+            deq.push_back(realRoot); // 层序遍历肯定是根节点入队
+        }
+
+        while (!deq.empty()) {
+            auto node = deq.front(); deq.pop_front();
+            if (node->left == nullptr) { // 左孩子为空
+                node->left = newNode;
+                deq.push_front(node);
+            } else if (node->right == nullptr) { // 右孩子为空
+                node->right = newNode;
+                deq.push_front(node);
+            } else {
+                deq.push_back(node->left);  // node 不再入队
+                deq.push_back(node->right);
+                continue;
+            }
+            return node->val;
+        }
+        return -1;
     }
     
     TreeNode* get_root() {
-
+        return realRoot;
     }
 };
 

@@ -75,7 +75,27 @@
 class Solution {
 public:
     int peakIndexInMountainArray(vector<int>& arr) {
+<<<<<<< HEAD
 
+=======
+        int n = arr.size();
+        if (n < 3) return -1;
+
+        /*
+            思路：最小的满足 arr[i] > arr[i+1] 的下标 i
+        */
+        int left = 0, right = n-1, ans = 0;
+        while (left <= right) {
+            int mid = (right-left)/2 + left;
+            if (arr[mid] > arr[mid+1]) {
+                ans = mid;
+                right = mid-1;
+            } else {
+                left = mid+1;
+            }
+        }
+        return ans;
+>>>>>>> 55bb9d84a2e7b46aa8a6a016e66f6be12b35aea2
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

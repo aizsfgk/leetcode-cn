@@ -39,7 +39,21 @@
 class Solution {
 public:
     int mySqrt(int x) {
+<<<<<<< HEAD
 
+=======
+        int idx = -1, left = 0, right = x;
+        while (left <= right) {
+            long long mid = (right-left)/2 + left;
+            if (mid * mid <= x) {
+                idx = mid;
+                left = mid+1;
+            } else {
+                right = mid-1;
+            }
+        }
+        return (int)idx;
+>>>>>>> 55bb9d84a2e7b46aa8a6a016e66f6be12b35aea2
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
