@@ -46,6 +46,26 @@ public:
     int findMaxForm(vector<string>& strs, int m, int n) {
         // 思路:
         //
+        vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
+
+
+        for (string str : strs) {
+            int zeroNum = 0, oneNum = 0;
+
+            for (char c : str) {
+                if (c == '0') zeroNum++; // 0的个数
+                else oneNum++;           // 1的个数
+            }
+
+            // dp[i][j] : i个0， j个1在`str`s中的最大子集长度是dp[i][j]
+            for (int i=m; i>=zeroNum; i--) {      // 从右向左遍历
+                for (int j=n; j>=oneNum; j--) {
+                    dp[i][j] = max(dp[i][j], dp[i-zeroNum][j-oneNum] + 1);
+                }
+            }
+        }
+
+        return dp[m][n];
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

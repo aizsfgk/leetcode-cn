@@ -113,7 +113,7 @@ public:
         dp[0] = 1; // 1种方案
         for (int i = 0; i < nums.size(); i++) {
             for (int j = bagSize; j >= nums[i]; j--) {
-                dp[j] += dp[j - nums[i]];
+                dp[j] += dp[j - nums[i]]; // 方案数
             }
         }
         return dp[bagSize];
