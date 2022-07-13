@@ -60,7 +60,26 @@ public:
         return false;
         */
 
-        
+        int n = nums.size();
+        set<int> window;
+        for (int i=0; i<n; i++) {
+            // 我们检查窗口中是否存在元素落在区间 [x−t,x+t] 中即可
+            // 二分查找
+            // 一个数 >= nums[i] - t
+            auto it = window.lower_bound(max(nums[i], INT_MIN+t)-t);
+
+            // 存在这个数，并且这个数 <= nums[i] - t
+            if ( it != window.end() && *it <= min(nums[i], INT_MAX-t)+t ) {
+                return true;
+            }
+
+            window.insert(nums[i]);
+
+            if (i>=k) {
+                window.erase(nums[i-k]);
+            }
+        }
+        return false;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
