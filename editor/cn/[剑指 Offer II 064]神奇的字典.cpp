@@ -63,6 +63,8 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class MagicDictionary {
+private:
+    unordered_map<int, vector<string>> umap;
 public:
     /** Initialize your data structure here. */
     MagicDictionary() {
@@ -70,11 +72,32 @@ public:
     }
     
     void buildDict(vector<string> dictionary) {
-
+        for (auto &str : dictionary) {
+            umap[str.size()].push_back(str);
+        }
     }
     
     bool search(string searchWord) {
+        int n = searchWord.size();
+        vector<string> rs = umap[n];
 
+        for (auto &str : rs) {
+            int cnt = 0;
+            for (int i=0; i<str.size(); i++) {
+                if (str[i] != searchWord[i]) {
+                    cnt++;
+                }
+
+                if (cnt > 1) {
+                    break;
+                }
+
+                if (cnt == 1 && i == n-1) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 };
 
