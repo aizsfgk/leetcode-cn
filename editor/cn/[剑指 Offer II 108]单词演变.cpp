@@ -12,7 +12,7 @@
 //
 // 
 //
-// 示例 1： 
+// 示例 1：
 //
 // 
 //输入：beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot",
