@@ -50,8 +50,17 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
+    // dp[i][0] 和 dp[i][1]dp[i][1] 分别表示下标 ii 处的字符为 00 和 11 的情况下使得 s[0..i]s[0..i] 单调递增的最小翻转次数
     int minFlipsMonoIncr(string s) {
-
+        int dp = 0;
+        if (s.size() == 1) return dp;
+        int count = 0;
+        if (s[0] == '1') count = 1;
+        for (int i=1; i<s.size(); i++) {
+            if (s[i] == '1') count++;
+            else dp = min(dp+1, count);
+        }
+        return dp;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

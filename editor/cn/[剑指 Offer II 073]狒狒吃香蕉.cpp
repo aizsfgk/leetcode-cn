@@ -51,6 +51,7 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+<<<<<<< HEAD
 /*
 每次比较 当前速度k消耗的总小时数 和 h 的大小关系。
 
@@ -75,6 +76,11 @@ public:
             else l = mid+1;
         }
         return r+1;
+=======
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+
+>>>>>>> 0cc0f34f5081b86e23effd53b578d35cab26243b
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

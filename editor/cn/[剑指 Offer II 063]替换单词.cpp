@@ -70,9 +70,80 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+<<<<<<< HEAD
 public:
     string replaceWords(vector<string>& dictionary, string sentence) {
 
+=======
+private:
+   struct Trie {
+        unordered_map<char, Trie*> children;
+   };
+public:
+    string replaceWords(vector<string>& dictionary, string sentence) {
+        // 1. 建树
+        Trie *trie = new Trie();
+        for (auto &word : dictionary) {
+            Trie *cur = trie;
+            for (char &c : word) {
+                if (!cur->children.count(c)) {
+                    cur->children[c] = new Trie();
+                }
+                cur = cur->children[c];
+            }
+            cur->children['#'] = new Trie();
+        }
+
+        // 2. split 并替换
+        vector<string> words = split(sentence, ' ');
+        for (auto &word : words) {
+            word = findRoot(word, trie);
+        }
+
+        // 3. 拼接
+        string ans;
+        for (int i=0; i<words.size()-1; i++) {
+            ans.append(words[i]);
+            ans.append(" ");
+        }
+        ans.append(words.back());
+        return ans;
+    }
+
+    vector<string> split(string &str, char ch) {
+        int pos = 0;
+        int start = 0;
+        vector<string> ret;
+        while (pos < str.size()) {
+            while (pos < str.size() && str[pos] == ch) {
+                pos++;
+            }
+            start = pos;
+            while (pos < str.size() && str[pos] != ch) {
+                pos++;
+            }
+            if (start < str.size()) {
+                ret.emplace_back(str.substr(start, pos - start));
+            }
+        }
+        return ret;
+    }
+
+    string findRoot(string &word, Trie *trie) {
+        string root;
+        Trie *cur = trie;
+        for (char &c : word) {
+            if (cur->children.count('#')) {
+                return root;
+            }
+            if (!cur->children.count(c)) {
+                return word;
+            }
+            root.push_back(c);
+            cur = cur->children[c];
+        }
+        return root;
+>>>>>>> 0cc0f34f5081b86e23effd53b578d35cab26243b
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

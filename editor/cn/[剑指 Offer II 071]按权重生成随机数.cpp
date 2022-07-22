@@ -68,6 +68,7 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+<<<<<<< HEAD
 private:
     mt19937 gen;
     uniform_int_distribution<int> dis;
@@ -80,6 +81,15 @@ public:
     int pickIndex() {
         int x = dis(gen);
         return lower_bound(pre.begin(), pre.end(), x) - pre.begin();
+=======
+public:
+    Solution(vector<int>& w) {
+
+    }
+    
+    int pickIndex() {
+
+>>>>>>> 0cc0f34f5081b86e23effd53b578d35cab26243b
     }
 };
 

@@ -67,8 +67,27 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
-    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+    // dfs
+    // 也有点像是回溯
+    vector<vector<int>> ans;
+    vector<int> path;
 
+    void dfs(const vector<vector<int>> &graph, int cur) {
+        if (cur == graph.size()-1) {
+            ans.push_back(path);
+            return;
+        }
+
+        for (auto x : graph[cur]) {
+            path.push_back(x);
+            dfs(graph, x);
+            path.pop_back();
+        }
+    }
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        path.push_back(0);
+        dfs(graph, 0);
+        return ans;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

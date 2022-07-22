@@ -54,9 +54,56 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+<<<<<<< HEAD
 public:
     bool isInterleave(string s1, string s2, string s3) {
 
     }
 };
+=======
+private:
+    bool check(const string &s1, int i,
+            const string &s2, int j,
+            const string &s3, int k,
+            vector<vector<int>> &memo) {
+
+        if ( memo[i][j] != 0) {
+            return memo[i][j] > 0 ? true : false;
+        }
+
+        if (k == s3.size()) {
+            memo[i][j] = 1;
+            return true;
+        }
+
+
+
+        bool isValid = false;
+        if (i < s1.size() && s1[i] == s3[k]) {
+            isValid = check(s1, i+1, s2, j, s3, k+1, memo);
+        }
+        if (j < s2.size() && s2[j] == s3[k]) {
+            isValid = isValid || check(s1, i, s2, j+1, s3, k+1, memo);
+        }
+        memo[i][j] = isValid ? 1 : -1;
+        return isValid;
+    }
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        // 回溯可以进行多分支选择，如果这个分支不合法，退回状态
+        // 选择另一个分支。
+        // 回溯法的本质。
+
+
+        if (s1.size() + s2.size() != s3.size())
+            return false;
+
+        vector<vector<int>> memo(s1.size()+1, vector<int>(s2.size()+1));
+
+        // 没有剪枝; 会超时
+        return check(s1, 0, s2, 0, s3, 0, memo);
+    }
+};
+
+>>>>>>> 0cc0f34f5081b86e23effd53b578d35cab26243b
 //leetcode submit region end(Prohibit modification and deletion)
