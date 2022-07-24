@@ -48,8 +48,39 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
-    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+    int findFather(vector<int> &fathers, int i) {
+        if (fathers[i] != i) {
+            return findFather(fathers, fathers[i]);
+        }
 
+        return i;
+    }
+
+    // 判断两个结点是否存在域同一个子集中
+    bool isUnion(vector<int> &fathers, int i, int j) {
+        int fatherOfI = findFather(fathers, i);
+        int fatherOfJ = findFather(fathers, j);
+
+        if (fatherOfI != fatherOfJ) {
+            fathers[fatherOfI] = fatherOfJ;
+            return true;
+        }
+        return false;
+    }
+
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        vector<int> fathers(1001);
+        for (int i=0; i<edges.size(); i++) {
+            fathers[i] = i;
+        }
+
+        for (auto &edge : edges) {
+            if (!isUnion(fathers, edge[0], edge[1])) {
+                return edge;
+            }
+        }
+
+        return {};
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

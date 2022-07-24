@@ -51,8 +51,45 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
-    int longestIncreasingPath(vector<vector<int>>& matrix) {
+    int dfs(vector<vector<int>>& matrix, vector<vector<int>>& lengths, int i, int j)
+    {
+        if (lengths[i][j] != 0)
+        {
+            return lengths[i][j];   //当前节点已计算过，直接返回其值，避免重复计算
+        }
 
+        vector<pair<int, int>> dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int length = 1;             //长度初始为1，即当前一个节点
+
+        for (pair<int, int> dir : dirs)
+        {
+            int x = i + dir.first;
+            int y = j + dir.second;
+
+            if (x >= 0 && x < matrix.size() && y >= 0 && y < matrix[0].size() && matrix[x][y] > matrix[i][j])
+            {
+                // +1 表示包含当前点的长度
+                length = max(length, dfs(matrix, lengths, x, y) + 1);
+            }
+        }
+
+        lengths[i][j] = length;     //记录该点的最长路径
+        return length;
+    }
+
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        vector<vector<int>> lengths(matrix.size(), vector<int>(matrix[0].size()));
+
+        int longest = 0;
+        for (int i = 0; i < matrix.size(); ++ i)
+        {
+            for (int j = 0; j < matrix[0].size(); ++ j)
+            {
+                longest = max(longest, dfs(matrix, lengths, i, j));
+            }
+        }
+
+        return longest;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

@@ -47,8 +47,56 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
-    int numSimilarGroups(vector<string>& strs) {
+    bool isSimilar(string& str1, string& str2)      //判断字符串是否相似
+    {
+        int diffCount = 0;
 
+        for (int i = 0; i < str1.size(); ++ i)
+        {
+            if (str1[i] != str2[i])
+            {
+                diffCount ++ ;
+            }
+        }
+
+        return diffCount <= 2;
+    }
+
+    void bfs(vector<string>& strs, vector<bool>& isVisited, int cur)
+    {
+        queue<int> q;
+        q.push(cur);
+
+        while (!q.empty())
+        {
+            int i = q.front();
+            q.pop();
+            isVisited[i] = true;
+
+            for (int j = 0; j < strs.size(); ++ j)
+            {
+                if (isSimilar(strs[i], strs[j]) && !isVisited[j])
+                {
+                    q.push(j);
+                }
+            }
+        }
+    }
+
+    int numSimilarGroups(vector<string>& strs) {
+        vector<bool> isVisited(strs.size());
+        int res = 0;
+
+        for (int i = 0; i < strs.size(); ++ i)
+        {
+            if (!isVisited[i])
+            {
+                bfs(strs, isVisited, i);
+                res ++ ;
+            }
+        }
+
+        return res;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

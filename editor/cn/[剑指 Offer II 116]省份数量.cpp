@@ -48,8 +48,40 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
-    int findCircleNum(vector<vector<int>>& isConnected) {
+    int Find(vector<int> &parent, int idx) {
+        if (parent[idx] != idx) {
+           parent[idx] = Find(parent, parent[idx]);
+        }
+        return parent[idx];
+    }
 
+    void Union(vector<int> &parent, int idx1, int idx2) {
+        parent[Find(parent, idx1)] = Find(parent, idx2);
+    }
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int cities = isConnected.size();
+        vector<int> parent(cities);
+
+        for (int i=0; i<cities; i++) {
+            parent[i] = i;
+        }
+
+        for (int i=0; i<cities; i++) {
+            for (int j=i+1; j<cities; j++) {
+                if (isConnected[i][j] == 1) {
+                    Union(parent, i, j);
+                }
+            }
+        }
+
+        int provinces = 0;
+        for (int i=0; i<cities; i++) {
+            if (parent[i] == i) {
+                provinces++;
+            }
+        }
+        return provinces;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
