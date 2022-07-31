@@ -54,7 +54,25 @@
 class Solution {
 public:
     int minimumTotal(vector<vector<int>>& triangle) {
+        int n = triangle.size();
+        vector<vector<int>> dp(n, vector<int>(n, 0));
+        dp[0][0] = triangle[0][0];
 
+        for (int i=1; i<n; i++) {
+            // 0索引只能取上一行的0索引位置
+            dp[i][0] = dp[i-1][0] + triangle[i][0];
+
+            for (int j=1; j<i; j++) {
+                // 取上一行当前j或者上一行当前j-1位置
+                dp[i][j] = min(dp[i-1][j], dp[i-1][j-1]) + triangle[i][j];
+            }
+
+            // 最后位置，只能取上一行前一个位置
+            dp[i][i] = dp[i-1][i-1] + triangle[i][i];
+        }
+
+        // 取最后一行，最小的元素值
+        return *min_element(dp[n-1].begin(), dp[n-1].end());
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

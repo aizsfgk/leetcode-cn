@@ -51,7 +51,26 @@
 class Solution {
 public:
     int numDistinct(string s, string t) {
+        // dp[i][j] 代表 T 前 i 字符串可以由 S j 字符串组成最多个数
 
+        int m = s.size(), n = t.size();
+        // 使用unsigned long long 防止溢出
+        vector<vector<unsigned long long>> dp(n+1, vector<unsigned long long>(m+1, 0));
+
+        for (int j=0; j<=m; j++) {
+            dp[0][j] = 1;
+        }
+
+        for (int i=1; i<=n; i++) {
+            for (int j=1; j<=m; j++) {
+                if (t[i-1] == s[j-1]) {
+                    dp[i][j] = dp[i-1][j-1] + dp[i][j-1];
+                } else {
+                    dp[i][j] = dp[i][j-1];
+                }
+            }
+        }
+        return (int)dp[n][m];
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

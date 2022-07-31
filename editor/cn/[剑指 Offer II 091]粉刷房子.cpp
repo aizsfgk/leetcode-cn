@@ -39,13 +39,20 @@
 // 
 //
 // 注意：本题与主站 256 题相同：https://leetcode-cn.com/problems/paint-house/ 
+<<<<<<< HEAD
+// Related Topics 数组 动态规划 👍 119 👎 0
+=======
 // Related Topics 数组 动态规划 👍 118 👎 0
+>>>>>>> 0cc0f34f5081b86e23effd53b578d35cab26243b
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
     int minCost(vector<vector<int>>& costs) {
+<<<<<<< HEAD
+
+=======
         //
 
         int n = costs.size();
@@ -55,6 +62,7 @@ public:
             costs[i][2] += min(costs[i-1][0], costs[i-1][1]);
         }
         return *min_element(costs.back().begin(), costs.back().end());
+>>>>>>> 0cc0f34f5081b86e23effd53b578d35cab26243b
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

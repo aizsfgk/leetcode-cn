@@ -54,6 +54,13 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+<<<<<<< HEAD
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+
+    }
+};
+=======
 private:
     bool check(const string &s1, int i,
             const string &s2, int j,
@@ -98,4 +105,5 @@ public:
     }
 };
 
+>>>>>>> 0cc0f34f5081b86e23effd53b578d35cab26243b
 //leetcode submit region end(Prohibit modification and deletion)

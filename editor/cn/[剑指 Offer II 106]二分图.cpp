@@ -57,6 +57,7 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+<<<<<<< HEAD
 /*
     1. 二分图进行涂色操作
     2.
@@ -97,6 +98,11 @@ public:
             }
         }
         return true;
+=======
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
+
+>>>>>>> dd4c5495a6ee27614ac7567b921efa4dfe394d7c
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

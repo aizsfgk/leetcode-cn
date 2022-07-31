@@ -51,9 +51,36 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+<<<<<<< HEAD
+/*
+每次比较 当前速度k消耗的总小时数 和 h 的大小关系。
+
+时间复杂度nlogC，空间复杂度1（n为piles大小，C为piles里的最大元素值）
+*/
+private:
+    int getHour(vector<int> &piles, int k) {
+        int hour = 0;
+        int n = piles.size();
+        for (int &pile : piles) {
+            // 每一堆消耗的小时数
+            hour += (pile+k-1)/k;
+        }
+        return hour;
+    }
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int l = 1, r = *max_element(piles.begin(), piles.end());
+        while (l <= r) {
+            int mid = l + (r-l)/2;
+            if (getHour(piles, mid) <= h) r = mid-1; // r 右侧满足小时数小于等于h
+            else l = mid+1;
+        }
+        return r+1;
+=======
 public:
     int minEatingSpeed(vector<int>& piles, int h) {
 
+>>>>>>> 0cc0f34f5081b86e23effd53b578d35cab26243b
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

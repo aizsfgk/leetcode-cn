@@ -70,6 +70,11 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+<<<<<<< HEAD
+public:
+    string replaceWords(vector<string>& dictionary, string sentence) {
+
+=======
 private:
    struct Trie {
         unordered_map<char, Trie*> children;
@@ -138,6 +143,7 @@ public:
             cur = cur->children[c];
         }
         return root;
+>>>>>>> 0cc0f34f5081b86e23effd53b578d35cab26243b
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

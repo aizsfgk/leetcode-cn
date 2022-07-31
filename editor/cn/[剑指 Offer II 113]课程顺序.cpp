@@ -52,10 +52,120 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
+/*
 class Solution {
+
+private:
+    // 深度优先搜索
+    // 深度优先搜索不是拓扑排序；
+    vector<int> mark;
+    vector<int> preOrder;
+
+    bool traverse(const vector<vector<int>> &graph, int i) {
+        // true 表示有环
+        if (mark[i] == 1) {
+            return true;
+        }
+
+        if (mark[i] == 2) {
+            return false;
+        }
+
+
+        mark[i] = 1;
+        for (int t : graph[i]) {
+            if (traverse(graph, t)) {
+                return true;
+            }
+        }
+        mark[i] = 2;
+
+        preOrder.push_back(i);
+
+        return false;
+    }
+    vector<vector<int>> buildGraph(int numCourses, vector<vector<int>> &prerequisites) {
+        vector<vector<int>> graph(numCourses);
+
+        for (auto edge : prerequisites) {
+            int from = edge[1];
+            int to = edge[0];
+
+            graph[from].push_back(to);
+        }
+        return graph;
+    }
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> graph = buildGraph(numCourses, prerequisites);
+        mark.resize(numCourses);
+
+
+        for (int i=0; i<numCourses; i++) {
+            if (traverse(graph, i)) {
+                return {};
+            }
+        }
+
+       reverse(preOrder.begin(), preOrder.end());
+       return preOrder;
+    }
+};
+
+*/
+class Solution {
+private:
+    /*
+        使用广度优先搜索。
+        思路:
+
+
+    */
+    vector<int> inDegree;
+
+    vector<vector<int>> buildGraph(int numCourses, vector<vector<int>> &prerequisites) {
+        vector<vector<int>> graph(numCourses);
+        for (auto edge : prerequisites) {
+            int from = edge[1];
+            int to = edge[0];
+
+            inDegree[to]++; // 入度
+            graph[from].push_back(to);
+        }
+        return graph;
+    }
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
 
+        inDegree.resize(numCourses);
+
+        vector<vector<int>> graph = buildGraph(numCourses, prerequisites);
+
+        vector<int> ans;
+
+        queue<int> que;
+        for (int i=0; i<numCourses; i++) {
+            if (inDegree[i] == 0) {
+                que.push(i);
+            }
+        }
+
+
+        while (!que.empty()) {
+            int head = que.front(); que.pop();
+            ans.push_back(head);
+
+            for (auto i : graph[head]) {
+                if (--inDegree[i] == 0) {
+                    que.push(i);
+                }
+            }
+        }
+
+        if (ans.size() == numCourses) {
+            return ans;
+        }
+        return {};
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

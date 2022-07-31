@@ -45,6 +45,20 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class MapSum {
+<<<<<<< HEAD
+public:
+    /** Initialize your data structure here. */
+    MapSum() {
+
+    }
+    
+    void insert(string key, int val) {
+
+    }
+    
+    int sum(string prefix) {
+
+=======
 private:
 struct TrieNode {
     int val;
@@ -91,6 +105,7 @@ public:
             }
         }
         return node->val;
+>>>>>>> 0cc0f34f5081b86e23effd53b578d35cab26243b
     }
 };
 
